@@ -13,4 +13,12 @@ public class CommonUtil {
 		return UUID.randomUUID().toString();
 
 	}
+	
+	public static boolean isEmptyString(String string){
+		if(string != null && string != ""){
+			return false;
+		}else{
+			return true;
+		}
+	}
 }
