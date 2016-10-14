@@ -12,18 +12,18 @@ public class PollJDO implements Serializable {
 	 * 
 	 */
 	private static final long serialVersionUID = 2965690203852718173L;
-	
+
 	@PrimaryKey
 	String pollID = "";
-	
+
 	String streamID = "";
-	
+
 	String pollQuestion = "";
-	
+
 	String pollDescription = "";
-	
+
 	Long createdTime = new Date().getTime();
-	
+
 	Long endedTime = new Date().getTime();
 
 	public String getPollID() {

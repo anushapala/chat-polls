@@ -13,15 +13,15 @@ public class PollItemJDO implements Serializable {
 	 * 
 	 */
 	private static final long serialVersionUID = -8706921670889027472L;
-	
+
 	@PrimaryKey
 	String pollOptionID = "";
-	
+
 	String pollID = "";
-	
+
 	ArrayList<String> optionLikedList = new ArrayList<String>();
-	
-	HashMap<Object,Object> pollOptionContent = new HashMap<Object,Object>();
+
+	HashMap<Object, Object> pollOptionContent = new HashMap<Object, Object>();
 
 	public String getPollOptionID() {
 		return pollOptionID;
@@ -54,5 +54,5 @@ public class PollItemJDO implements Serializable {
 	public void setPollOptionContent(HashMap<Object, Object> pollOptionContent) {
 		this.pollOptionContent = pollOptionContent;
 	}
-	
-}	
+
+}
