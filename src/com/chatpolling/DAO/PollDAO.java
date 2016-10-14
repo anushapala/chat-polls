@@ -7,8 +7,8 @@ import java.util.logging.Logger;
 
 import javax.jdo.PersistenceManager;
 
-import com.chatpolling.data.JDO.PollItemJDO;
-import com.chatpolling.data.JDO.PollJDO;
+import com.chatpolling.JDO.PollItemJDO;
+import com.chatpolling.JDO.PollJDO;
 import com.chatpolling.util.CommonUtil;
 import com.chatpolling.util.PersistenceManagerUtil;
 
@@ -26,10 +26,8 @@ public class PollDAO {
 				objPollJdo.setStreamID((String)pollRequestMap.get("streamID"));
 				objPollJdo.setPollQuestion((String)pollRequestMap.get("pollQuestion"));
 				objPollJdo.setPollDescription((String)pollRequestMap.get("pollDiscription"));
-				objPollJdo.setPollCreated(new Date().getTime());
-				objPollJdo.setPollEnded(0l);
-				objPollJdo.setPollIsDelete(false);
-				objPollJdo.setSelectMultipleOptions((boolean)pollRequestMap.get("selectMultipleOptions"));
+				objPollJdo.setCreatedTime(new Date().getTime());
+				objPollJdo.setEndedTime(0l);
 				
 				boolean success = saveJDOS(objPollJdo);
 				responseMap.put("success", success);
@@ -53,14 +51,14 @@ public class PollDAO {
 					HashMap<Object,Object> pollOptContent = new HashMap<Object,Object>();
 					HashMap<String,Object> pollOptinfo = pollItemsList.get(index);
 
-					objPollItemJDO.setPollOptID(CommonUtil.getUniqueId());
+					objPollItemJDO.setPollOptionID(CommonUtil.getUniqueId());
 					objPollItemJDO.setPollID(pollID);
-					objPollItemJDO.setPollOptLikedList(pollOptLikedList);
+					objPollItemJDO.setOptionLikedList(pollOptLikedList);
 					
 					pollOptContent.put("img", pollOptinfo.get("img"));
 					pollOptContent.put("optionName", pollOptinfo.get("optionName"));
 					
-					objPollItemJDO.setPollOptContent(pollOptContent);
+					objPollItemJDO.setPollOptionContent(pollOptContent);
 					
 					saveJDOS(objPollItemJDO);
 					pollItemJDOList.add(objPollItemJDO);	
