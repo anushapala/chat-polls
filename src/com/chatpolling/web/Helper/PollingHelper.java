@@ -1,11 +1,11 @@
-package com.chatpolling.main;
+package com.chatpolling.web.Helper;
 
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.logging.Logger;
 
 import com.chatpolling.DAO.PollDAO;
-import com.chatpolling.data.JDO.PollJDO;
+import com.chatpolling.JDO.PollJDO;
 
 public class PollingHelper {
 	private static Logger logger =  Logger.getLogger(PollingHelper.class.getPackage().getName());
