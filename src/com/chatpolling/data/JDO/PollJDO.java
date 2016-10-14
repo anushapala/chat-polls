@@ -20,6 +20,8 @@ public class PollJDO implements Serializable {
 	
 	String streamID = "";
 	
+	String createdBy = "";
+	
 	String pollQuestion = "";
 		
 	String pollDescription = "";
@@ -29,6 +31,10 @@ public class PollJDO implements Serializable {
 	Long pollEnded = new Date().getTime();
 	
 	boolean pollIsDelete = false;
+	
+	
+	
+	boolean selectMultipleOptions = false;
 	
 
 	public String getPollID() {
@@ -87,4 +93,12 @@ public class PollJDO implements Serializable {
 		this.streamID = streamID;
 	}
 	
+	public boolean isSelectMultipleOptions() {
+		return selectMultipleOptions;
+	}
+
+	public void setSelectMultipleOptions(boolean selectMultipleOptions) {
+		this.selectMultipleOptions = selectMultipleOptions;
+	}
+
 }

@@ -29,6 +29,7 @@ public class PollDAO {
 				objPollJdo.setPollCreated(new Date().getTime());
 				objPollJdo.setPollEnded(0l);
 				objPollJdo.setPollIsDelete(false);
+				objPollJdo.setSelectMultipleOptions((boolean)pollRequestMap.get("selectMultipleOptions"));
 				
 				boolean success = saveJDOS(objPollJdo);
 				responseMap.put("success", success);
@@ -60,7 +61,6 @@ public class PollDAO {
 					pollOptContent.put("optionName", pollOptinfo.get("optionName"));
 					
 					objPollItemJDO.setPollOptContent(pollOptContent);
-					objPollItemJDO.setPollOptIsDelete(false);
 					
 					saveJDOS(objPollItemJDO);
 					pollItemJDOList.add(objPollItemJDO);	

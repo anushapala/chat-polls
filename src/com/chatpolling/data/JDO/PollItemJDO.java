@@ -21,7 +21,6 @@ public class PollItemJDO implements Serializable {
 	
 	ArrayList<String> pollOptLikedList = new ArrayList<String>();
 	
-	boolean pollOptIsDelete = false;
 	
 	HashMap<Object,Object> pollOptContent = new HashMap<Object,Object>();
 
@@ -47,14 +46,6 @@ public class PollItemJDO implements Serializable {
 
 	public void setPollOptLikedList(ArrayList<String> pollOptLikedList) {
 		this.pollOptLikedList = pollOptLikedList;
-	}
-
-	public boolean isPollOptIsDelete() {
-		return pollOptIsDelete;
-	}
-
-	public void setPollOptIsDelete(boolean pollOptIsDelete) {
-		this.pollOptIsDelete = pollOptIsDelete;
 	}
 
 	public HashMap<Object, Object> getPollOptContent() {
