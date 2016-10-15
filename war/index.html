@@ -15,28 +15,34 @@
   </head>
 
   <body>
-  	<section class="Polling wrapper">
+
+    <div class="wrapper">
+  	<section class="Polling">
         <h3>Create a Poll</h3>
-        <div class="question">
+         <div class="question" id="poll-question">
         <label class="input_label">Question</label>
         <textarea class="textarea_default" type="text" placeholder="Enter question here..."></textarea>
         </div>
-        <div>
-            <label class="input_label">option 1:</label>
-            <div class="poll-option">
-              <i class="icon picture-upload"></i>
-              <input class="input_default input_small option-holder" type="text" placeholder="Enter option here...">
-            </div>
+        <div id="poll-option-container">
+	        <div>
+	            <label class="input_label">option 1:</label>
+	            <div class="poll-option">
+	              <img class="icon picture-upload" data-imgId="img1">
+	              <input type="file" style="visibility: hidden;display:none" id="imgupload1">
+	              <input class="input_default input_small option-holder" type="text" placeholder="Enter option here...">
+	            </div>
+	        </div>
+	        <div>
+	            <label class="input_label">option 2:</label>
+	            <div class="poll-option">
+	              <img class="icon picture-upload" data-imgId="img2">
+	              <input type="file" style="visibility: hidden;display:none" id="imgupload2">
+	              <input class="input_default input_small option-holder" type="text" placeholder="Enter option here...">
+	            </div>
+	        </div>
         </div>
-        <div>
-            <label class="input_label">option 2:</label>
-            <div class="poll-option">
-              <i class="icon picture-upload"></i>
-              <input class="input_default input_small option-holder" type="text" placeholder="Enter option here...">
-            </div>
 
-        </div>
-        <span class="add">+Add More</span>
+        <span class="add" id="add-option">+Add More</span>
         <div>
             <label class="input_label">Description</label>
             <textarea class="textarea_default" type="text" placeholder="Enter Comments here..."></textarea>
@@ -46,31 +52,54 @@
         <button class="btn btn_primary">Create</button>
     </section>
     <!---polling station-->
-      <section class="Polling polling-station wrapper">
-        <h3>Poll Created by</h3>
-        <div class="question">
-            <p>Which image should go as our group profile picture?</p>
-            <cite>This poll is to select the most liked profile picture</cite>
-        </div>
-        <div>
-            <label class="input_label">option 1:</label>
-            <div class="poll-option">
-              <i class="icon picture-upload"></i>
-              <input class="input_default input_small option-holder" type="text" placeholder="Enter option here...">
+      <section class="Polling polling-station" style="display: none";>
+        <h3>Polls</h3>
+    <ul>
+        <li class="question">
+                <span class="notification"></span>
+                <h5 class="name">Santhosh</h5>
+                <p>Which image should go as our group profile picture?</p>
+                <div class="expand contract">
+                    <cite>This poll is to select the most liked profile picture</cite>
+                    <div class="option-container">
+                    
+                    <div>
+                    <label class="input_label">option 1:</label>
+                    <div class="poll-option">
+                        <i class="icon picture-upload"></i>
+                        <input class="input_default input_small option-holder" type="text" placeholder="Enter option here...">
+                    </div>
+                    <code>22 votes</code>
+                     </div>
+                     <div>
+                        <label class="input_label">option 2:</label>
+                        <div class="poll-option">
+                            <i class="icon picture-upload"></i>
+                            <input class="input_default input_small option-holder" type="text" placeholder="Enter option here...">
+                        </div>
+                        <code>5 votes</code>
+                    </div>
+                    
+                    
+                    </div>
             </div>
-            <code>22 votes</code>
-        </div>
-        <div>
-            <label class="input_label">option 2:</label>
-            <div class="poll-option">
-              <i class="icon picture-upload"></i>
-              <input class="input_default input_small option-holder" type="text" placeholder="Enter option here...">
-            </div>
-            <code>5 votes</code>
-        </div>
+        </li>
+    </ul>
         <button class="btn btn_primary">Share</button>
     </section>
+<!--
+    <section class="polls-list">
+        <ul>
+            <li>
+                <div class=""
+            </li>
+        
+        </ul>   
+    </section>
+-->
+   </div>
  	<script type="text/javascript" src="/js/libJS/jquery-2.2.0.min.js"></script>
+ 	<script type="text/javascript" src="/js/libJS/aaf_sdk_min.js"></script>
   	<script type="text/javascript" src="/js/scriptJS/main.js"></script>
   </body>
 </html>

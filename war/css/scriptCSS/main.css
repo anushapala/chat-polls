@@ -109,6 +109,7 @@ outline: 0;
 min-width: 66px;
 font-size: 14px;
 box-sizing: border-box;
+cursor:pointer;
 }
 
 .btn_primary {
@@ -127,6 +128,7 @@ background-color: #83C447;
     font-size: 12px;
     display: inline-block;
     margin-top: -10px;
+    cursor:pointer;
 }
 .options{
     color:#5C6470;
@@ -162,7 +164,10 @@ button{
     background-image: url(/images/icon-image.png);
     background-repeat: no-repeat;
     background-position: center;
+    cursor:pointer;
+    background-size:17px 15px;
 }
+
 .option-holder{
     background-color: transparent;
     border: 0;
@@ -191,21 +196,44 @@ button{
     float: right;
     margin-top: 5px;
 }
-/*
-.polling-station button{
-    margin-top: 20px;
+.question .name{
+    font-size: 14px;
+    color:#2B333D;
+    font-weight: 600;
+    margin-bottom: 5px;
+}
+.polling-station ul{
+    margin-top: 10px;
+}
+.polling-station .option-container{
+    margin:10px 0;
+}
+.polling-station .expand{
+    margin:0;
+}
+.notification{
+    background: url(/images/notification.png) no-repeat;
+    width: 5px;
+    height: 5px;
+    position: absolute;
+    top: 56px;
+    left: 499px;
+}
+li{
+    list-style: none;
 }
 */
 @media (-webkit-min-device-pixel-ratio: 2), (min-resolution: 192dpi) {
-    .picture-upload{
-    background-image: url(/images/icon-image2x.png);
-    background-repeat: no-repeat;
-    background-position: center;
-}
+   .picture-upload{
+	    background-image: url(/images/icon-image2x.png);
+	    background-repeat: no-repeat;
+	    background-position: center;
+	    background-size:17px 15px;
+	}
     .checkbox_active {
-    background-color: #1DABF2;
-    background-image: url(/images/check_2x.png);
-    background-size: 11px 11px;
-    background-position: center;
-}
+	    background-color: #1DABF2;
+	    background-image: url(/images/check_2x.png);
+	    background-size: 11px 11px;
+	    background-position: center;
+	}
 }
