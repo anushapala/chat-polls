@@ -28,6 +28,7 @@
 	              <img class="icon picture-upload" id="img1">
 	              <input type="file" style="visibility: hidden;display:none" id="imgupload1">
 	              <input class="input_default input_small option-holder" type="text" placeholder="Enter option here...">
+	              <!-- <span class="delete"></span> -->
 	            </div>
 	        </div>
 	        <div>
@@ -36,19 +37,21 @@
 	              <img class="icon picture-upload" id="img2">
 	              <input type="file" style="visibility: hidden;display:none" id="imgupload2">
 	              <input class="input_default input_small option-holder" type="text" placeholder="Enter option here...">
+	              <!-- <span class="delete"></span> -->
 	            </div>
 	        </div>
         </div>
 
         <span class="add" id="add-option">+Add More</span>
-        <div>
+        <div id="poll-description">
             <label class="input_label">Description</label>
             <textarea class="textarea_default" type="text" placeholder="Enter Comments here..."></textarea>
         </div>
         <span class="checkbox checkbox_active"></span>
         <span class="options">Allow to select multiple options</span>
-        <button class="btn btn_primary">Create</button>
+        <button class="btn btn_primary" id="create-poll">Create</button>
     </section>
+    
     <!---polling station-->
       <section class="Polling polling-station wrapper" style="display: none";>
         <h3>Poll Created by</h3>
