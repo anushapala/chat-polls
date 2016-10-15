@@ -49,6 +49,8 @@ public class PollingHelper {
 					boolean isSaved = PollDAO.savePollJDO(objPollJDO);
 					
 					if(isSaved){
+						ArrayList<String> optionLinkedList = new ArrayList<String>();
+
 						for(HashMap<String, Object> singleOptionDetails : pollOptionsDetails){
 							String pollOptionText = (String) singleOptionDetails.get("pollOptionContent");
 							String pollOptionImageURL = (String) singleOptionDetails.get("pollOptionImageURL");
@@ -60,7 +62,7 @@ public class PollingHelper {
 								objPollItemJDO.setPollID(objPollJDO.getPollID());
 								objPollItemJDO.setPollOptionText(pollOptionText);
 								objPollItemJDO.setPollOptionImageURL(pollOptionImageURL);
-								objPollItemJDO.setOptionLikedList(null);
+								objPollItemJDO.setOptionLikedList(optionLinkedList);
 								
 								boolean blnIsSaved = PollItemDAO.savePollItemJDO(objPollItemJDO);
 								if(blnIsSaved){
