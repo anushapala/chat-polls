@@ -103,6 +103,7 @@ font-weight: 500;
 padding: 8px 10px;
 outline: 0;
 min-width: 66px;
+cursor:pointer;
 }
 
 .btn_primary {
@@ -120,6 +121,7 @@ background-color: #83C447;
     font-size: 12px;
     display: inline-block;
     margin-top: -10px;
+    cursor:pointer;
 }
 .options{
     color:#5C6470;
@@ -155,7 +157,9 @@ button{
     background-image: url(/images/icon-image.png);
     background-repeat: no-repeat;
     background-position: center;
+    cursor:pointer;
 }
+
 .option-holder{
     background-color: transparent;
     border: 0;
