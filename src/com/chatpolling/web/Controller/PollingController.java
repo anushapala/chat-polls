@@ -1,7 +1,6 @@
 package com.chatpolling.web.Controller;
 
 import java.io.IOException;
-import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.logging.Logger;
 
@@ -27,28 +26,27 @@ public class PollingController {
 	
 	@RequestMapping(value="/createPoll",method = RequestMethod.POST)
 	public @ResponseBody String createPoll(@RequestBody String requestJSON) throws JsonGenerationException, JsonMappingException, IOException{
-		
-		String responseJSON = "";
-		HashMap<String,Object> requestMap = new HashMap<String,Object>();
-		HashMap<String,Object> responseMap = new HashMap<String,Object>();
 
-		ObjectMapper mapper = new ObjectMapper();
-		TypeReference<HashMap<String, Object>> typeRef = new TypeReference<HashMap<String, Object>>() {};
+		logger.info("IN PollingController -> createPoll() \n requestJSON :: " + requestJSON);
+		HashMap<String,Object> responseMap = new HashMap<String,Object>();
+		String responseJSON = "";
+		ObjectMapper objectMapper = new ObjectMapper();
+		
 		try{
-			 requestMap = mapper.readValue(requestJSON, typeRef);
-			 ArrayList<HashMap<String,Object>> pollItemsList = (ArrayList<HashMap<String,Object>>) requestMap.get("pollItemsList");
-			 HashMap<String,Object> pollReqMap = (HashMap<String, Object>) requestMap.get("pollReqMap");
-			 
-			 responseMap = PollingHelper.createPollHelper(pollReqMap,pollItemsList);
-			 responseJSON = mapper.writeValueAsString(responseMap);
+			HashMap<String,Object> pollDetailsMap = new HashMap<String,Object>();
+			TypeReference<HashMap<String, Object>> typeRef = new TypeReference<HashMap<String, Object>>(){};
+			pollDetailsMap = objectMapper.readValue(requestJSON, typeRef);
+		
+			responseMap = PollingHelper.createPollHelper(pollDetailsMap);
 			
 		}catch(Exception e){
 			logger.info(e.getMessage());
 			e.printStackTrace();
-			requestMap.put("success", false);
-			requestMap.put("message", "Error on creating poll");
-			responseJSON = mapper.writeValueAsString(requestMap);
+			responseMap.put("success", false);
+			responseMap.put("message", "Error on creating poll!");
 		}
+		responseJSON = objectMapper.writeValueAsString(responseMap);
+		logger.info("\n OUT PollingController -> createPoll() \nresponseJSON to be returned is :: " + responseJSON);
 		return responseJSON;
 	}
 }

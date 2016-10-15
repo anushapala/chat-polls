@@ -2,7 +2,6 @@ package com.chatpolling.JDO;
 
 import java.io.Serializable;
 import java.util.ArrayList;
-import java.util.HashMap;
 
 import javax.jdo.annotations.PersistenceCapable;
 import javax.jdo.annotations.PrimaryKey;
@@ -18,10 +17,13 @@ public class PollItemJDO implements Serializable {
 	String pollOptionID = "";
 	
 	String pollID = "";
+
+	String pollOptionText = "";
+	
+	String pollOptionImageURL = "";
 	
 	ArrayList<String> optionLikedList = new ArrayList<String>();
 	
-	HashMap<Object,Object> pollOptionContent = new HashMap<Object,Object>();
 
 	public String getPollOptionID() {
 		return pollOptionID;
@@ -39,20 +41,28 @@ public class PollItemJDO implements Serializable {
 		this.pollID = pollID;
 	}
 
+	public String getPollOptionText() {
+		return pollOptionText;
+	}
+
+	public void setPollOptionText(String pollOptionText) {
+		this.pollOptionText = pollOptionText;
+	}
+
+	public String getPollOptionImageURL() {
+		return pollOptionImageURL;
+	}
+
+	public void setPollOptionImageURL(String pollOptionImageURL) {
+		this.pollOptionImageURL = pollOptionImageURL;
+	}
+	
 	public ArrayList<String> getOptionLikedList() {
 		return optionLikedList;
 	}
 
 	public void setOptionLikedList(ArrayList<String> optionLikedList) {
 		this.optionLikedList = optionLikedList;
-	}
-
-	public HashMap<Object, Object> getPollOptionContent() {
-		return pollOptionContent;
-	}
-
-	public void setPollOptionContent(HashMap<Object, Object> pollOptionContent) {
-		this.pollOptionContent = pollOptionContent;
 	}
 	
 }	
