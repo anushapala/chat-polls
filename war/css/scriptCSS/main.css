@@ -38,10 +38,14 @@
 .polling{
 width: 300px;
 margin: 0 auto;
-padding: 20px 20px 45px 20px;
+padding: 20px 20px 55px 20px;
 border:1px solid #d8dce1;
 border-radius: 3px;
 box-shadow: inset 0 1px 3px 0 rgba(0,0,0,0.5);
+box-sizing: border-box;
+}
+.polling button{
+    margin-top: 10px;
 }
 .textarea_default {
 background-color: #fff;
@@ -50,7 +54,7 @@ box-shadow: inset 0 1px 3px 0 rgba(0,0,0,.05);
 padding: 10px;
 outline: 0;
 border-radius: 3px;
-width: 298px;
+width: 260px;
 resize: none;
 font-size: 14px;
 font-weight: 300;
@@ -103,6 +107,9 @@ font-weight: 500;
 padding: 8px 10px;
 outline: 0;
 min-width: 66px;
+font-size: 14px;
+box-sizing: border-box;
+cursor:pointer;
 }
 
 .btn_primary {
@@ -114,12 +121,14 @@ background-color: #83C447;
 }
 .polling h3{
     color:#2B333D;
+    font-size: 16px;
 }
 .add{
     color:#21ABF0;
     font-size: 12px;
     display: inline-block;
     margin-top: -10px;
+    cursor:pointer;
 }
 .options{
     color:#5C6470;
@@ -141,8 +150,22 @@ button{
     background-color: #fff;
     border: 1px solid #d8dce1;
     box-shadow: inset 0 1px 3px 0 rgba(0,0,0,.05);
-    width: 298px;
+    width: 260px;
 }
+
+.poll-option:hover  span.delete{
+	display:block;
+}
+
+.poll-option span.delete{
+	background: url(/images/close.png) no-repeat center top 10px;
+    width: 20px;
+    height: 20px;
+    float: right;
+    display:none;
+    cursor: pointer;
+}
+
 .icon{
     width: 40px;
     height: 30px;
@@ -155,26 +178,55 @@ button{
     background-image: url(/images/icon-image.png);
     background-repeat: no-repeat;
     background-position: center;
+    cursor:pointer;
+    background-size:17px 15px;
 }
+
 .option-holder{
     background-color: transparent;
     border: 0;
     box-shadow: none;
+    cursor:pointer;
 }
 
 .polling .poll-option{
     margin: 0;
 }
+.polling-station p{
+    font-size: 14px;
+    color:#7F8796;
+    font-weight: 400;
+}
+.polling-station cite{
+    font-size:12px;
+    color:#2B333D;
+    font-weight: 300;
+    opacity: 0.4;
+    margin-top: 10px;
+    display: inline-block;
+}
+.polling-station code{
+    font-size: 10px;
+    color: #7F8796;
+    float: right;
+    margin-top: 5px;
+}
+/*
+.polling-station button{
+    margin-top: 20px;
+}
+*/
 @media (-webkit-min-device-pixel-ratio: 2), (min-resolution: 192dpi) {
-    .picture-upload{
-    background-image: url(/images/icon-image2x.png);
-    background-repeat: no-repeat;
-    background-position: center;
-}
+   .picture-upload{
+	    background-image: url(/images/icon-image2x.png);
+	    background-repeat: no-repeat;
+	    background-position: center;
+	    background-size:17px 15px;
+	}
     .checkbox_active {
-    background-color: #1DABF2;
-    background-image: url(/images/check_2x.png);
-    background-size: 11px 11px;
-    background-position: center;
-}
+	    background-color: #1DABF2;
+	    background-image: url(/images/check_2x.png);
+	    background-size: 11px 11px;
+	    background-position: center;
+	}
 }
