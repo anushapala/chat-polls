@@ -31,7 +31,7 @@ public class PollingHelper {
 				String createdBy = (String)pollQuestionDetails.get("createdBy");
 				String pollQuestion = (String) pollQuestionDetails.get("pollQuestion");
 				String pollDescription = (String) pollQuestionDetails.get("pollDescription");
-				if( CommonUtil.isEmptyString(streamID) || CommonUtil.isEmptyString(createdBy) || CommonUtil.isEmptyString(pollQuestion) || CommonUtil.isEmptyString(pollDescription) ){
+				if( CommonUtil.isEmptyString(streamID) || CommonUtil.isEmptyString(createdBy) || CommonUtil.isEmptyString(pollQuestion)){
 					responseMap.put("success", false);
 					responseMap.put("message", "Required details are empty!");
 				}else {
