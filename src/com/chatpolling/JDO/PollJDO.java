@@ -22,6 +22,8 @@ public class PollJDO implements Serializable {
 	
 	String pollDescription = "";
 	
+	String createdBy = "";
+	
 	Long createdTime = new Date().getTime();
 	
 	Long endedTime = new Date().getTime();
@@ -60,6 +62,15 @@ public class PollJDO implements Serializable {
 
 	public Long getCreatedTime() {
 		return createdTime;
+	}
+
+	
+	public String getCreatedBy() {
+		return createdBy;
+	}
+
+	public void setCreatedBy(String createdBy) {
+		this.createdBy = createdBy;
 	}
 
 	public void setCreatedTime(Long createdTime) {

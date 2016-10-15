@@ -14,6 +14,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
 
+import com.chatpolling.util.CommonUtil;
 import com.chatpolling.web.Helper.PollingHelper;
 
 
@@ -47,6 +48,37 @@ public class PollingController {
 		}
 		responseJSON = objectMapper.writeValueAsString(responseMap);
 		logger.info("\n OUT PollingController -> createPoll() \nresponseJSON to be returned is :: " + responseJSON);
+		return responseJSON;
+	}
+	
+	@RequestMapping(value="/fetchPoll",method = RequestMethod.POST)
+	public @ResponseBody String fetchPoll(@RequestBody String requestJSON) throws JsonGenerationException, JsonMappingException, IOException{
+
+		logger.info("IN PollingController -> fetchPoll() \n requestJSON :: " + requestJSON);
+		HashMap<String,Object> responseMap = new HashMap<String,Object>();
+		String responseJSON = "";
+		ObjectMapper objectMapper = new ObjectMapper();
+		
+		try{
+			TypeReference<HashMap<String, Object>> typeRef = new TypeReference<HashMap<String, Object>>(){};
+			HashMap<String,Object> requestMap = objectMapper.readValue(requestJSON, typeRef);
+			String streamID = (String) requestMap.get("streamID");
+		
+			if(!CommonUtil.isEmptyString(streamID)){
+				responseMap = PollingHelper.fetchPollHelper(streamID);
+			}else{
+				responseMap.put("success", false);
+				responseMap.put("message", "Required details are empty!");
+			}
+			
+		}catch(Exception e){
+			logger.info(e.getMessage());
+			e.printStackTrace();
+			responseMap.put("success", false);
+			responseMap.put("message", "Error in fetching polls!");
+		}
+		responseJSON = objectMapper.writeValueAsString(responseMap);
+		logger.info("\n OUT PollingController -> fetchPoll() \nresponseJSON to be returned is :: " + responseJSON);
 		return responseJSON;
 	}
 }
