@@ -176,7 +176,9 @@ var PollOperations = (function($,window,document,undefined){
 					//'streamID' : Poll.getContext().id,
 					'streamID' 		  :'3aab167e-fcb5-4b6a-a962-17c48551c204',
 					'createdBy' 	  : '5f3e80ff-e730-470f-a708-bb4639a55a6c',
-					'pollQuestion' 	  : pollQuestion,
+					'createdUserName' : 'anusha',
+					'createdUserImg'  : "http://lh3.googleusercontent.com/gklzH6FsFJ0t8pyBDoiwUKMW34SDixebyqfdVt7BVvetxL-jksSsgQN69R0bf5gS0YCu038ziYCK28rt2vxDBQ-s8JbBfuOPl8D67YQ"
+ 					'pollQuestion' 	  : pollQuestion,
 					'pollDescription' : pollDescription
 				},
 				'pollOptionsDetails' : pollOptionsList
@@ -192,9 +194,14 @@ var PollOperations = (function($,window,document,undefined){
 			contentType:'application/json',
 			success : function(response){
 				console.log(response);
-				var pollArray = [];
-				pollArray.push(response);
-				PollOperations.diplayPollsList(pollArray);
+				if(response.success){
+					var pollArray = [];
+					pollArray.push(response);
+					PollOperations.diplayPollsList(pollArray);
+				}else{
+					console.log(response);
+				}
+				
 			},failure : function(errResp){
 				console.error(errResp);
 			}
@@ -219,7 +226,9 @@ var PollOperations = (function($,window,document,undefined){
 			contentType:'application/json',
 			success: function(response){
 				console.log(response);
-				PollOperations.diplayPollsList(response.PollsDetailsList);
+				if(response.success){
+					PollOperations.diplayPollsList(response.PollsDetailsList);
+				}
 			},failure :function(errResp){
 				console.error(errResp);
 			}
