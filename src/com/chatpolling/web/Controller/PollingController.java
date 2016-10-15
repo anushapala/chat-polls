@@ -81,4 +81,37 @@ public class PollingController {
 		logger.info("\n OUT PollingController -> fetchPoll() \nresponseJSON to be returned is :: " + responseJSON);
 		return responseJSON;
 	}
+	
+	@RequestMapping(value="/updatePollOption",method = RequestMethod.POST)
+	public @ResponseBody String updatePollOption(@RequestBody String requestJSON) throws JsonGenerationException, JsonMappingException, IOException{
+
+		logger.info("IN PollingController -> updatePollOption() \n requestJSON :: " + requestJSON);
+		HashMap<String,Object> responseMap = new HashMap<String,Object>();
+		String responseJSON = "";
+		ObjectMapper objectMapper = new ObjectMapper();
+		
+		try{
+			TypeReference<HashMap<String, Object>> typeRef = new TypeReference<HashMap<String, Object>>(){};
+			HashMap<String,Object> requestMap = objectMapper.readValue(requestJSON, typeRef);
+			String pollID = (String) requestMap.get("pollID");
+			String pollOptionID = (String) requestMap.get("pollOptionID");
+			String contactID = (String) requestMap.get("contactID");
+		
+			if( CommonUtil.isEmptyString(pollID) || CommonUtil.isEmptyString(pollOptionID) || CommonUtil.isEmptyString(contactID) ){
+				responseMap.put("success", false);
+				responseMap.put("message", "Required details are empty!");
+			}else{
+				responseMap = PollingHelper.updatePollOptionHelper(pollID, pollOptionID, contactID);
+			}
+			
+		}catch(Exception e){
+			logger.info(e.getMessage());
+			e.printStackTrace();
+			responseMap.put("success", false);
+			responseMap.put("message", "Error in fetching polls!");
+		}
+		responseJSON = objectMapper.writeValueAsString(responseMap);
+		logger.info("\n OUT PollingController -> updatePollOption() \nresponseJSON to be returned is :: " + responseJSON);
+		return responseJSON;
+	}
 }

@@ -137,5 +137,68 @@ public class PollingHelper {
 		return responseMap;
 	}
 	
-
+	
+	public static HashMap<String,Object> updatePollOptionHelper(String pollID, String pollOptionID, String contactID){
+		logger.info("IN updatePollOptionHelper()");
+		HashMap<String, Object> responseMap = new HashMap<String, Object>(); 
+		try{
+			
+			PollJDO objPollJDO = PollDAO.fetchPollsForThisPollID(pollID);
+			if(objPollJDO != null){
+				ArrayList<PollItemJDO> pollOptionsList = (ArrayList<PollItemJDO>) PollItemDAO.fetchPollOptionsForThisPollID(pollID);
+				if( pollOptionsList != null && pollOptionsList.size() > 0 ){
+					boolean isDisLikeOperation = false;
+					for(PollItemJDO singlePollItemJDO : pollOptionsList){
+						if( pollOptionID.equalsIgnoreCase(singlePollItemJDO.getPollOptionID()) ){
+							ArrayList<String> likedContactIDList = singlePollItemJDO.getOptionLikedList();
+							if( likedContactIDList != null && likedContactIDList.size() > 0 && likedContactIDList.contains(contactID)){
+								likedContactIDList.remove(contactID);
+								singlePollItemJDO.setOptionLikedList(likedContactIDList);
+								PollItemDAO.savePollItemJDO(singlePollItemJDO);
+								isDisLikeOperation = true;
+								break;
+							}
+						}
+					}
+					
+					if(!isDisLikeOperation){
+						for(PollItemJDO singlePollItemJDO : pollOptionsList){
+							if( pollOptionID.equalsIgnoreCase(singlePollItemJDO.getPollOptionID()) ){
+								ArrayList<String> likedContactIDList = singlePollItemJDO.getOptionLikedList();
+								likedContactIDList.add(contactID);
+								singlePollItemJDO.setOptionLikedList(likedContactIDList);
+								PollItemDAO.savePollItemJDO(singlePollItemJDO);
+							}else{
+								ArrayList<String> likedContactIDList = singlePollItemJDO.getOptionLikedList();
+								if( likedContactIDList != null && likedContactIDList.size() > 0 && likedContactIDList.contains(contactID)){
+									likedContactIDList.remove(contactID);
+									singlePollItemJDO.setOptionLikedList(likedContactIDList);
+									PollItemDAO.savePollItemJDO(singlePollItemJDO);
+								}
+							}
+						}
+					}
+					
+					responseMap.put("success", true);
+					responseMap.put("pollQuestionDetails", objPollJDO);
+					responseMap.put("pollOptionsList", pollOptionsList);
+					responseMap.put("message", "Poll options are updated!");
+					
+				}else{
+					responseMap.put("success", false);
+					responseMap.put("message", "Problem in updating the poll option!");
+				}
+			}else{
+				responseMap.put("success", false);
+				responseMap.put("message", "Problem in updating the poll option!");
+			}
+		}catch(Exception e){
+			logger.info(e.getMessage());
+			e.printStackTrace();
+			
+			responseMap.put("success", false);
+			responseMap.put("message", "Problem in updating the poll option!");
+		}
+		return responseMap;
+	}
 }

@@ -58,4 +58,36 @@ public class PollDAO {
 			return null;
 		}
 	}
+	
+	public static PollJDO fetchPollsForThisPollID(String pollID){
+		try{
+			
+			PersistenceManager pm = PersistenceManagerUtil.getPersistenceManager();
+			List<PollJDO> lstPollJDO = new ArrayList<PollJDO>();
+			PollJDO objPollJDO = new PollJDO(); 
+			String strQuery = "SELECT FROM " + PollJDO.class.getName();
+			if( !CommonUtil.isEmptyString(pollID) ){
+				strQuery += " WHERE pollID == '" + pollID + "'";
+			}
+			
+			Query query = pm.newQuery(strQuery);
+			
+			lstPollJDO = (List<PollJDO>) query.execute();
+			
+			if(lstPollJDO != null && lstPollJDO.size() > 0){
+				lstPollJDO = (List<PollJDO>) pm.detachCopyAll(lstPollJDO);
+				logger.info("Size of the lstPollJDO is :: " + lstPollJDO.size());
+				objPollJDO = lstPollJDO.get(0);
+			}else{
+				objPollJDO = null;
+				logger.info("Size of the lstPollJDO is 0");
+			}
+			
+			return objPollJDO;
+		}catch(Exception e){
+			e.printStackTrace();
+			logger.severe("Exception :: " +e.getMessage());
+			return null;
+		}
+	}
 }
