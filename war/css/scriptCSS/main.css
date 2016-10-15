@@ -60,19 +60,25 @@ font-size: 14px;
 font-weight: 300;
 }
 .input_default {
-background-color: #fff;
-border: 1px solid #d8dce1;
-box-shadow: inset 0 1px 3px 0 rgba(0,0,0,.05);
-padding: 0 0 0 10px;
-outline: 0;
-border-radius: 3px;
-/*width: 298px;*/
+    height: 30px;
+    font-size: 14px;
+    font-weight: 300;
+    background-color: #fff;
+    border: 1px solid #d8dce1;
+    border-left: 0;
+    box-shadow: inset 0 1px 3px 0 rgba(0,0,0,.05);
+    padding: 0 0 0 10px;
+    outline: 0;
+    border-radius: 3px;
+    width: 83%;
 }
+/*
 .input_small {
 height: 30px;
 font-size: 14px;
 font-weight: 300;
 }
+*/
 .input_label {
 font-size: 12px;
 color: #7f8796;
@@ -150,7 +156,8 @@ button{
     background-color: #fff;
     border: 1px solid #d8dce1;
     box-shadow: inset 0 1px 3px 0 rgba(0,0,0,.05);
-    width: 260px;
+    width: 258px;
+    border-radius: 4px;
 }
 .icon{
     width: 40px;
@@ -212,12 +219,11 @@ button{
     margin:0;
 }
 .notification{
-    background: url(/images/notification.png) no-repeat;
-    width: 5px;
-    height: 5px;
-    position: absolute;
-    top: 56px;
-    left: 499px;
+    background: url(/images/notification.png) no-repeat top 5px left 4px;
+    width: 15px;
+    height: 15px;
+    float: left;
+    margin-left: -15px;
 }
 li{
     list-style: none;
