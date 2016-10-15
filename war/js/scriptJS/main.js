@@ -22,7 +22,7 @@ $(".picture-upload").on('click', function () {
 	    var domElement = '<div>';
 	    domElement += '		<label class="input_label">'+label+':</label>';
 	    domElement += '		<div class="poll-option">';
-	    domElement += '			<i class="icon picture-upload"></i>';
+	    domElement += '			<img class="icon picture-upload" data-imgId= img'+optionsCount+'>';
 	    domElement += '         <input class="input_default input_small option-holder" type="text" placeholder="Enter option here...">';
 	    domElement += '		</div>';
 	    domElement += '	  </div>';		

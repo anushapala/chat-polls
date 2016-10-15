@@ -25,7 +25,7 @@
 	        <div>
 	            <label class="input_label">option 1:</label>
 	            <div class="poll-option">
-	              <img class="icon picture-upload" id="img1">
+	              <img class="icon picture-upload" data-imgId="img1">
 	              <input type="file" style="visibility: hidden;display:none" id="imgupload1">
 	              <input class="input_default input_small option-holder" type="text" placeholder="Enter option here...">
 	            </div>
@@ -33,7 +33,7 @@
 	        <div>
 	            <label class="input_label">option 2:</label>
 	            <div class="poll-option">
-	              <img class="icon picture-upload" id="img2">
+	              <img class="icon picture-upload" data-imgId="img2">
 	              <input type="file" style="visibility: hidden;display:none" id="imgupload2">
 	              <input class="input_default input_small option-holder" type="text" placeholder="Enter option here...">
 	            </div>
@@ -50,7 +50,7 @@
         <button class="btn btn_primary">Create</button>
     </section>
     <!---polling station-->
-      <section class="Polling polling-station wrapper">
+      <section class="Polling polling-station wrapper" style="display: none";>
         <h3>Poll Created by</h3>
         <div class="question">
             <p>Which image should go as our group profile picture?</p>
