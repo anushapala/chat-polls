@@ -30,10 +30,12 @@ public class PollingHelper {
 				
 				String streamID = (String) pollQuestionDetails.get("streamID");
 				String createdBy = (String)pollQuestionDetails.get("createdBy");
+				String createdUserName = (String)pollQuestionDetails.get("createdUserName");
+				String createdUserImg = (String)pollQuestionDetails.get("createdUserImg");
 				String pollQuestion = (String) pollQuestionDetails.get("pollQuestion");
 				String pollDescription = (String) pollQuestionDetails.get("pollDescription");
 				pollDescription = CommonUtil.isEmptyString(pollDescription) ? "" : pollDescription;
-				if( CommonUtil.isEmptyString(streamID) || CommonUtil.isEmptyString(createdBy) || CommonUtil.isEmptyString(pollQuestion) ){
+				if( CommonUtil.isEmptyString(streamID) || CommonUtil.isEmptyString(createdBy) || CommonUtil.isEmptyString(createdUserName) || CommonUtil.isEmptyString(createdUserImg) || CommonUtil.isEmptyString(pollQuestion) ){
 					responseMap.put("success", false);
 					responseMap.put("message", "Required details are empty!");
 				}else {
@@ -41,6 +43,8 @@ public class PollingHelper {
 					objPollJDO.setPollID(CommonUtil.getUniqueId());
 					objPollJDO.setStreamID(streamID);
 					objPollJDO.setCreatedBy(createdBy);
+					objPollJDO.setCreatedUserName(createdUserName);
+					objPollJDO.setCreatedUserImg(createdUserImg);
 					objPollJDO.setPollQuestion(pollQuestion);
 					objPollJDO.setPollDescription(pollDescription);
 					objPollJDO.setCreatedTime(new Date().getTime());
@@ -60,7 +64,7 @@ public class PollingHelper {
 								objPollItemJDO.setPollID(objPollJDO.getPollID());
 								objPollItemJDO.setPollOptionText(pollOptionText);
 								objPollItemJDO.setPollOptionImageURL(pollOptionImageURL);
-								objPollItemJDO.setOptionLikedList(null);
+								objPollItemJDO.setOptionLikedList(new ArrayList<String>());
 								
 								boolean blnIsSaved = PollItemDAO.savePollItemJDO(objPollItemJDO);
 								if(blnIsSaved){
