@@ -172,8 +172,7 @@ var PollOperations = (function($,window,document,undefined){
 			contentType:'application/json',
 			success : function(responseJSON){
 				console.log(responseJSON);
-				var data = JSON.parse(responseJSON);
-				console.log(data);
+				PollOperations.fillPollInfo(responseJSON);
 				
 			},failure : function(){
 				
@@ -182,7 +181,9 @@ var PollOperations = (function($,window,document,undefined){
 		
 	};
 	
-	var fillPollInfo = function(){
+	var fillPollInfo = function(pollInfo){
+		
+		
 		
 	};
 	var fetchPoll = function(){
