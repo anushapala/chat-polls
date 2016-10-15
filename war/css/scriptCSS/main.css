@@ -152,6 +152,20 @@ button{
     box-shadow: inset 0 1px 3px 0 rgba(0,0,0,.05);
     width: 260px;
 }
+
+.poll-option:hover  span.delete{
+	display:block;
+}
+
+.poll-option span.delete{
+	background: url(/images/close.png) no-repeat center top 10px;
+    width: 20px;
+    height: 20px;
+    float: right;
+    display:none;
+    cursor: pointer;
+}
+
 .icon{
     width: 40px;
     height: 30px;
@@ -172,6 +186,7 @@ button{
     background-color: transparent;
     border: 0;
     box-shadow: none;
+    cursor:pointer;
 }
 
 .polling .poll-option{
