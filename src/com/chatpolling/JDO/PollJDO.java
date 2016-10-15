@@ -18,6 +18,8 @@ public class PollJDO implements Serializable {
 	
 	String streamID = "";
 	
+	String createdBy = "";
+
 	String pollQuestion = "";
 	
 	String pollDescription = "";
@@ -41,7 +43,15 @@ public class PollJDO implements Serializable {
 	public void setStreamID(String streamID) {
 		this.streamID = streamID;
 	}
+	
+	public String getCreatedBy() {
+		return createdBy;
+	}
 
+	public void setCreatedBy(String createdBy) {
+		this.createdBy = createdBy;
+	}
+	
 	public String getPollQuestion() {
 		return pollQuestion;
 	}

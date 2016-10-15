@@ -155,8 +155,9 @@ var PollOperations = (function($,window,document,undefined){
 		var requestMap = {
 				'pollQuestionDetails' : {
 					//'streamID' : Poll().getContext().id,
-					'streamID' :'3aab167e-fcb5-4b6a-a962-17c48551c204',
-					'pollQuestion' : pollQuestion,
+					'streamID' 		  :'3aab167e-fcb5-4b6a-a962-17c48551c204',
+					'createdBy' 	  : '5f3e80ff-e730-470f-a708-bb4639a55a6c',
+					'pollQuestion' 	  : pollQuestion,
 					'pollDescription' : pollDescription
 				},
 				'pollOptionsDetails' : pollOptionsList

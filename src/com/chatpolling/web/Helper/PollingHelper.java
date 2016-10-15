@@ -28,15 +28,17 @@ public class PollingHelper {
 			if(pollQuestionDetails != null && pollOptionsDetails != null && pollOptionsDetails.size() > 0){
 				
 				String streamID = (String) pollQuestionDetails.get("streamID");
+				String createdBy = (String)pollQuestionDetails.get("createdBy");
 				String pollQuestion = (String) pollQuestionDetails.get("pollQuestion");
 				String pollDescription = (String) pollQuestionDetails.get("pollDescription");
-				if( CommonUtil.isEmptyString(streamID) || CommonUtil.isEmptyString(pollQuestion) || CommonUtil.isEmptyString(pollDescription) ){
+				if( CommonUtil.isEmptyString(streamID) || CommonUtil.isEmptyString(createdBy) || CommonUtil.isEmptyString(pollQuestion) || CommonUtil.isEmptyString(pollDescription) ){
 					responseMap.put("success", false);
 					responseMap.put("message", "Required details are empty!");
 				}else {
 					PollJDO objPollJDO = new PollJDO();
 					objPollJDO.setPollID(CommonUtil.getUniqueId());
 					objPollJDO.setStreamID(streamID);
+					objPollJDO.setCreatedBy(createdBy);
 					objPollJDO.setPollQuestion(pollQuestion);
 					objPollJDO.setPollDescription(pollDescription);
 					objPollJDO.setCreatedTime(new Date().getTime());
