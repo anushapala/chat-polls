@@ -254,9 +254,9 @@ var PollOperations = (function($,window,document,undefined){
 				pollItemsList += pollItem;
 			}
 			
-			var pollDomItem = '<li class="question">';
+			var pollDomItem = '<li class="question" id="'+pollQuestionDetails.pollID+'">';
 			pollDomItem += '		<span class="notification"></span>';
-			pollDomItem += '		<h5 class="name">anusha</h5>';
+			pollDomItem += '		<h5 class="name" id="'+pollQuestionDetails.createdBy+'">anusha</h5>';
 			pollDomItem += '		<p>'+pollQuestionDetails.pollQuestion+'</p>';
 			pollDomItem += '		<div class="contract">';
 			pollDomItem += '			<cite>'+pollQuestionDetails.pollDescription+'</cite>';
