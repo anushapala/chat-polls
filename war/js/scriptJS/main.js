@@ -3,37 +3,47 @@ var app = AAFClient.init();
 
 $(document).ready(function(){
 	
-	
-	
-	
-	
-	
-	
+	//adding extra option on creating the poll
+	$('#add-option').on('click',function(e){
+		var optionsCount = $('#poll-option-container').find('label').length;
+		optionsCount =  optionsCount+1;
+		var label = "option "+optionsCount;
+		
+	    var domElement = '<div>';
+	    domElement += '		<label class="input_label">'+label+':</label>';
+	    domElement += '		<div class="poll-option">';
+	    domElement += '			<i class="icon picture-upload"></i>';
+	    domElement += '         <input class="input_default input_small option-holder" type="text" placeholder="Enter option here...">';
+	    domElement += '		</div>';
+	    domElement += '	  </div>';		
+	    
+	    $('#poll-option-container').append(domElement);
+	});
 	
 	
 });
 
 
-//default events
-
-//To show the count on app icon at chat header.
-app.postMessage('showCount',{  
-'count': 10,
-'id'   : context-id // userId / streamId
-}); 
-
-// To trigger desktop notification w.r.t user/stream
-app.postMessage('showNotification',{  
-    'id'     : context-id
-    'icon'   : null,          // App icon url to be shown in desktop notification.
-    'title'  : title          // Title for the desktop notification. Ex :"Todo app remainder",
-    'message': message        // body content for desktop notification. Ex : "Enabled desktop notification for todo app."
-  });
-
-// To show the app update indicator on recent contact/stream view context.
-app.postMessage('showIndicator',{
-    'id' : context-id // Context reference to show update indicator.
-});
+////default events
+//
+////To show the count on app icon at chat header.
+//app.postMessage('showCount',{  
+//'count': 10,
+//'id'   : context-id // userId / streamId
+//}); 
+//
+//// To trigger desktop notification w.r.t user/stream
+//app.postMessage('showNotification',{  
+//    'id'     : context-id
+//    'icon'   : null,          // App icon url to be shown in desktop notification.
+//    'title'  : title          // Title for the desktop notification. Ex :"Todo app remainder",
+//    'message': message        // body content for desktop notification. Ex : "Enabled desktop notification for todo app."
+//  });
+//
+//// To show the app update indicator on recent contact/stream view context.
+//app.postMessage('showIndicator',{
+//    'id' : context-id // Context reference to show update indicator.
+//});
 
 
 var Poll = (function($,window,document,undefined){
@@ -81,12 +91,12 @@ var PollOperations = (function($,window,document,undefined){
 	var createPoll = function(pollQuestion,pollDescription,pollOptionList){
 		
 		var requestMap = {
-				'pollQuestion' = {
+				'pollQuestion' : {
 					'streamId' : Poll().getContext().id,
 					'pollQuestion' : pollQuestion,
 					'pollDescription' : pollDescription
 				},
-				'pollOptions' = pollOptionList
+				'pollOptions' : pollOptionList
 		}
 		
 		var requestJSON = JSON.stringify(requestMap);
@@ -100,7 +110,7 @@ var PollOperations = (function($,window,document,undefined){
 				
 			},failure : function(){
 				
-			};
+			}
 		});
 		
 	};
