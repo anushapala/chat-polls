@@ -17,7 +17,7 @@
   <body>
   	<section class="Polling wrapper">
         <h3>Create a Poll</h3>
-        <div class="question" id="poll-question">
+         <div class="question" id="poll-question">
         <label class="input_label">Question</label>
         <textarea class="textarea_default" type="text" placeholder="Enter question here..."></textarea>
         </div>
@@ -48,6 +48,31 @@
         <span class="checkbox checkbox_active"></span>
         <span class="options">Allow to select multiple options</span>
         <button class="btn btn_primary">Create</button>
+    </section>
+    <!---polling station-->
+      <section class="Polling polling-station wrapper">
+        <h3>Poll Created by</h3>
+        <div class="question">
+            <p>Which image should go as our group profile picture?</p>
+            <cite>This poll is to select the most liked profile picture</cite>
+        </div>
+        <div>
+            <label class="input_label">option 1:</label>
+            <div class="poll-option">
+              <i class="icon picture-upload"></i>
+              <input class="input_default input_small option-holder" type="text" placeholder="Enter option here...">
+            </div>
+            <code>22 votes</code>
+        </div>
+        <div>
+            <label class="input_label">option 2:</label>
+            <div class="poll-option">
+              <i class="icon picture-upload"></i>
+              <input class="input_default input_small option-holder" type="text" placeholder="Enter option here...">
+            </div>
+            <code>5 votes</code>
+        </div>
+        <button class="btn btn_primary">Share</button>
     </section>
  	<script type="text/javascript" src="/js/libJS/jquery-2.2.0.min.js"></script>
  	<script type="text/javascript" src="/js/libJS/aaf_sdk_min.js"></script>
