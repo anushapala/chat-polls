@@ -73,11 +73,6 @@ font-weight: 300;
     width: 211px;
 }
 
-.input_default.selected {
-	background-color: rgba(94,242,200,.10);
-	border: 1px solid #4DAAD0;
-}
-
 .polling-station .input_default {
 	cursor:pointer;	
 }

@@ -17,7 +17,7 @@ $(document).ready(function(){
 	    domElement += '		<div class="poll-option">';
 	    domElement += '			<img class="icon picture-upload" id= img'+optionsCount+'>';
 	    domElement += '			<input type="file" style="visibility: hidden;display:none" id=imgupload'+optionsCount+'>';
-	    domElement += '         <input class="input_default option-holder" type="text" placeholder="Enter option here...">';
+	    domElement += '         <input class="input_default  option-holder" type="text" placeholder="Enter an option..">';
 	    domElement += '	 		<span class="delete"></span>';
 	    domElement += '		</div>';
 	    domElement += '	  </div>';
@@ -25,7 +25,8 @@ $(document).ready(function(){
 	    $('#poll-option-container').append(domElement);
 	});
 	
-	
+		
+	//creating a new poll
 	$('#create-poll').on('click',function(e){
 		var pollQuestion = $('#poll-question').find('textarea').val();
 		var pollDescription = $('#poll-description').find('textarea').val();
@@ -60,8 +61,8 @@ $(document).ready(function(){
 			
 	});
 		
-	  //PollOperations.fetchPollsForTheStream(Poll.getContext().id);	
-	  PollOperations.fetchPollsForTheStream('3aab167e-fcb5-4b6a-a962-17c48551c204');	
+	  PollOperations.fetchPollsForTheStream(Poll.getContext().id);	
+//	  PollOperations.fetchPollsForTheStream('3aab167e-fcb5-4b6a-a962-17c48551c204');	
 
 });
 
@@ -93,6 +94,16 @@ $(document.body).on('click','#create-new-poll',function(){
 
 $(document.body).on('click','#polls-list li',function(){
 	$(this).find('div.contract').slideToggle('3000')
+});
+
+$(document.body).on('click','#polls-list-container input.option-holder',function(e){
+	e.stopImmediatePropagation();
+	
+	var pollOptionID = $(this).parents('div.poll-opt-div').attr('id').split('_')[0];
+	var pollID = $(this).parents('li').attr('id').split('_')[0];
+	var contactID = Poll.getAppUser().id;
+	
+	PollOperations.updatePoll(pollID,pollOptionID,contactID);
 });
 
 function showImage(id, fileInput) {
@@ -152,7 +163,7 @@ var Poll = (function($,window,document,undefined){
 		app = AAFClient.init();
 		app.on('registered', function(data) {
 			   console.error("On app.registered event.",data);
-			   _appUser = data.user;
+			   _appuser = data.user;
 			 });
 		
 		app.on('activated',function(data){
@@ -200,10 +211,12 @@ var PollOperations = (function($,window,document,undefined){
 		showLoader();
 		var requestMap = {
 				'pollQuestionDetails' : {
-					//'streamID' : Poll.getContext().id,
-					'streamID' 		  :'3aab167e-fcb5-4b6a-a962-17c48551c204',
-					'createdBy' 	  : '5f3e80ff-e730-470f-a708-bb4639a55a6c',
-					'createdUserName' : 'anusha',
+					'streamID' : Poll.getContext().id,
+//					'streamID' 		  :'3aab167e-fcb5-4b6a-a962-17c48551c204',
+					'createdBy' 	  : Poll.getAppUser().id,
+//					'createdBy' 	  : '5f3e80ff-e730-470f-a708-bb4639a55a6c',
+					'createdUserName' 	  : Poll.getAppUser().firstName,
+//					'createdUserName' : 'anusha',
 					'createdUserImg'  : 'http://lh3.googleusercontent.com/gklzH6FsFJ0t8pyBDoiwUKMW34SDixebyqfdVt7BVvetxL-jksSsgQN69R0bf5gS0YCu038ziYCK28rt2vxDBQ-s8JbBfuOPl8D67YQ',
  					'pollQuestion' 	  : pollQuestion,
 					'pollDescription' : pollDescription
@@ -223,8 +236,13 @@ var PollOperations = (function($,window,document,undefined){
 				console.log(response);
 				if(response.success){
 					var pollArray = [];
-					pollArray.push(response);
-					PollOperations.diplayPollsList(pollArray);
+					var pollObj = {
+							'pollQuestionDetails' : response.pollQuestionDetails,
+							'pollOptionsList' : response.pollOptionsList
+					}
+					
+					pollArray.push(pollObj);
+					PollOperations.diplayPollsList(pollArray,'prependNewPoll');
 					hideLoader();
 				}else{
 					console.log(response);
@@ -263,7 +281,7 @@ var PollOperations = (function($,window,document,undefined){
 				console.log(response);
 				if(response.success){
 					if( response.PollsDetailsList != 'undefined' && response.PollsDetailsList != null ){
-						PollOperations.diplayPollsList(response.PollsDetailsList);
+						PollOperations.diplayPollsList(response.PollsDetailsList,'listAllPoll');
 					}else{
 						$('#polls-list').html("<p>No Polls Yet!</p>");
 					}
@@ -279,8 +297,7 @@ var PollOperations = (function($,window,document,undefined){
 		});
 	};
 	
-	var diplayPollsList = function(pollsList){
-		//show the loader goes here
+	var diplayPollsList = function(pollsList, requestionFrom){
 		
 		for(var index in pollsList){
 			
@@ -289,26 +306,54 @@ var PollOperations = (function($,window,document,undefined){
 			
 			var pollItemsList = "";
 			var count = 0;
+			var showNotification = false;
 			for(var ind in pollOptionsList){
 				count = count+1;
-				var pollItem = '<div id="'+pollOptionsList[ind].pollOptionID+'">';
+				var pollItem = '<div class="poll-opt-div" id="'+pollOptionsList[ind].pollOptionID+'_optionID">';
 				pollItem += '		<label class="input_label">option '+count+':</label>';
 				pollItem += '		<div class="poll-option">';
 				pollItem += '			<img class="icon" src="'+pollOptionsList[ind].pollOptionImageURL+'">';
-				pollItem += ' 			<input class="input_default option-holder" type="text" readonly value="'+pollOptionsList[ind].pollOptionText+'"/>';
+				pollItem += ' 			<input class="input_default  option-holder" type="text" readonly value="'+pollOptionsList[ind].pollOptionText+'"/>';
 				pollItem += '		</div>';
-				if(pollOptionsList[ind].optionLikedList != null ){
-					pollItem += '		<code>'+pollOptionsList[ind].optionLikedList.length+' votes</code>';
+				
+				var count = 0;
+				var likedList = pollOptionsList[ind].optionLikedList;
+				if(likedList.length != 0 ){
+					if(likedList.indexOf(Poll.getAppUser().id) > -1 ){
+						if(likedList.length == 1){
+							count = likedList.length+ " vote - You voted";
+						}else{
+							count = likedList.length+ " votes - You voted"
+						}
+					}else{
+						if(likedList.length == 1){
+							count = likedList.length + " vote";
+						}else{
+							count = likedList.length + " votes";
+						}
+					}
 				}else{
-					pollItem += '		<code> 0 votes</code>';
+					count = likedList.length + " votes";
+				}
+				
+				pollItem += '		<code>'+count+'</code>';
+				
+				var optionLikedList = pollOptionsList[ind].optionLikedList;
+				for( var polloptId in optionLikedList){
+					if(optionLikedList[polloptId].indexOf(Poll.getAppUser().id) > -1){
+						showNotification = true;
+						break;
+					}
 				}
 				pollItem += '	</div>';
 				pollItemsList += pollItem;
 			}
 			
-			var pollDomItem = '<li class="question" id="'+pollQuestionDetails.pollID+'">';
-			pollDomItem += '		<span class="notification"></span>';
-			pollDomItem += '		<h5 class="name" id="'+pollQuestionDetails.createdBy+'">' + pollQuestionDetails.createdUserName + '</h5>';
+			var pollDomItem = '<li class="question" id="'+pollQuestionDetails.pollID+'_pollID">';
+			if(showNotification){
+				pollDomItem += '		<span class="notification"></span>';
+			}
+			pollDomItem += '		<h5 class="name" id="'+pollQuestionDetails.createdBy+'_pollOnwer">anusha</h5>';
 			pollDomItem += '		<p>'+pollQuestionDetails.pollQuestion+'</p>';
 			pollDomItem += '		<div class="contract">';
 			if(pollQuestionDetails.pollDescription != null && pollQuestionDetails.pollDescription != ""){
@@ -322,7 +367,12 @@ var PollOperations = (function($,window,document,undefined){
 			pollDomItem += '		</div>';
 			pollDomItem += '	</li>';
 			
-			$('#polls-list').append(pollDomItem);
+			if('prependNewPoll' == requestionFrom){
+				$('#polls-list').prepend(pollDomItem);
+			}else{
+				$('#polls-list').append(pollDomItem);
+			}
+	
 		}
 		
 		PollOperations.showPollsListView();
@@ -341,8 +391,7 @@ var PollOperations = (function($,window,document,undefined){
 				'contactID' : contactID
 		}
 		
-		var responseJSON = JSON.strinfigy(requestMap);
-		
+		var responseJSON = JSON.stringify(requestMap);
 		
 		$.ajax({
 			type : 'POST',
@@ -351,10 +400,35 @@ var PollOperations = (function($,window,document,undefined){
 			dataType : 'json',
 			contentType:'application/json',
 			success : function(response){
-				if(resposne.success){
+				if(response.success){
+					var pollOptionsList = response.pollOptionsList;
 					
-					//do the update front end action. 
-					
+					for(var index in pollOptionsList){
+						var likedList = pollOptionsList[index].optionLikedList;
+						var pollOptionID = pollOptionsList[index].pollOptionID +"_optionID";
+						
+						var count = 0;
+						if(likedList.length != 0 ){
+							if(likedList.indexOf(Poll.getAppUser().id) > -1 ){
+								if(likedList.length == 1){
+									count = likedList.length+ " vote - You voted";
+								}else{
+									count = likedList.length+ " votes - You voted"
+								}
+							}else{
+								if(likedList.length == 1){
+									count = likedList.length + " vote";
+								}else{
+									count = likedList.length + " votes";
+								}
+							}
+						}else{
+							count = likedList.length + " votes";
+						}
+						
+						$('#'+pollID+'_pollID').find('#'+pollOptionID).find('code').html(count);
+
+					}	
 				}
 				
 			},error : function(errResp){
