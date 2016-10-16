@@ -3,9 +3,6 @@ var app = null;
 
 $(document).ready(function(){
 
-	$('#create-poll-container').hide();
-	$('#polls-list-container').hide();
-	
 	//adding extra option on creating the poll
 	$('#add-option').on('click',function(e){
 		var optionsCount = $('#poll-option-container').find('label').length;
@@ -59,11 +56,7 @@ $(document).ready(function(){
 			PollOperations.createPoll(pollQuestion,pollDescription,pollOptionsArrayList);
 		}
 			
-	});
-		
-	  PollOperations.fetchPollsForTheStream(Poll.getContext().id);	
-//	  PollOperations.fetchPollsForTheStream('3aab167e-fcb5-4b6a-a962-17c48551c204');	
-
+	});		
 });
 
 
@@ -169,11 +162,19 @@ var Poll = (function($,window,document,undefined){
 		app.on('activated',function(data){
 			   console.error("On app activation.",data);
 			  _context = data.context;
+			  
+			  $('#create-poll-container').hide();
+			  $('#polls-list-container').hide();
+			  PollOperations.fetchPollsForTheStream(_context.id);	
 			});
 
 		app.on('context-change',function(data){
 				console.error("On context change.",data);
 				_context = data.context;
+				
+				$('#create-poll-container').hide();
+				$('#polls-list-container').hide();
+				 PollOperations.fetchPollsForTheStream(_context.id);	
 			});
 
 		app.on('deactivated',function(data){
@@ -284,9 +285,12 @@ var PollOperations = (function($,window,document,undefined){
 						PollOperations.diplayPollsList(response.PollsDetailsList,'listAllPoll');
 					}else{
 						$('#polls-list').html("<p>No Polls Yet!</p>");
+						//show illstration
+						
 					}
 				}else{
 					$('#polls-list').html("<p>No Polls Yet!</p>");
+					//show illustration
 				}
 				hideLoader();
 			},
@@ -306,45 +310,51 @@ var PollOperations = (function($,window,document,undefined){
 			
 			var pollItemsList = "";
 			var count = 0;
-			var showNotification = false;
+			var showNotification = true;
 			for(var ind in pollOptionsList){
 				count = count+1;
 				var pollItem = '<div class="poll-opt-div" id="'+pollOptionsList[ind].pollOptionID+'_optionID">';
 				pollItem += '		<label class="input_label">option '+count+':</label>';
 				pollItem += '		<div class="poll-option">';
 				pollItem += '			<img class="icon" src="'+pollOptionsList[ind].pollOptionImageURL+'">';
-				pollItem += ' 			<input class="input_default  option-holder" type="text" readonly value="'+pollOptionsList[ind].pollOptionText+'"/>';
-				pollItem += '		</div>';
 				
-				var count = 0;
+				
+				var votesCount = 0;
 				var likedList = pollOptionsList[ind].optionLikedList;
 				if(likedList.length != 0 ){
 					if(likedList.indexOf(Poll.getAppUser().id) > -1 ){
 						if(likedList.length == 1){
-							count = likedList.length+ " vote - You voted";
+							votesCount = likedList.length+ " vote - You voted";
 						}else{
-							count = likedList.length+ " votes - You voted"
+							votesCount = likedList.length+ " votes - You voted"
 						}
 					}else{
 						if(likedList.length == 1){
-							count = likedList.length + " vote";
+							votesCount = likedList.length + " vote";
 						}else{
-							count = likedList.length + " votes";
+							votesCount = likedList.length + " votes";
 						}
 					}
 				}else{
-					count = likedList.length + " votes";
+					votesCount = likedList.length + " votes";
 				}
-				
-				pollItem += '		<code>'+count+'</code>';
 				
 				var optionLikedList = pollOptionsList[ind].optionLikedList;
 				for( var polloptId in optionLikedList){
 					if(optionLikedList[polloptId].indexOf(Poll.getAppUser().id) > -1){
-						showNotification = true;
+						showNotification = false;
 						break;
 					}
 				}
+				
+				if(showNotification){
+					pollItem += ' 			<input class="input_default  option-holder" type="text" readonly value="'+pollOptionsList[ind].pollOptionText+'"/>';
+				}else{
+					pollItem += ' 			<input class="input_default  option-holder selected" type="text" readonly value="'+pollOptionsList[ind].pollOptionText+'"/>';
+				}
+				
+				pollItem += '		</div>';
+				pollItem += '		<code>'+votesCount+'</code>';
 				pollItem += '	</div>';
 				pollItemsList += pollItem;
 			}
@@ -403,6 +413,7 @@ var PollOperations = (function($,window,document,undefined){
 				if(response.success){
 					var pollOptionsList = response.pollOptionsList;
 					
+					$('#'+pollID+'_pollID').find('input.option-holder').removeClass('selected');
 					for(var index in pollOptionsList){
 						var likedList = pollOptionsList[index].optionLikedList;
 						var pollOptionID = pollOptionsList[index].pollOptionID +"_optionID";
@@ -415,6 +426,7 @@ var PollOperations = (function($,window,document,undefined){
 								}else{
 									count = likedList.length+ " votes - You voted"
 								}
+								$('#'+pollID+'_pollID').find('#'+pollOptionID).find('input.option-holder').addClass('selected');
 							}else{
 								if(likedList.length == 1){
 									count = likedList.length + " vote";
@@ -427,7 +439,6 @@ var PollOperations = (function($,window,document,undefined){
 						}
 						
 						$('#'+pollID+'_pollID').find('#'+pollOptionID).find('code').html(count);
-
 					}	
 				}
 				
@@ -447,6 +458,7 @@ var PollOperations = (function($,window,document,undefined){
 	};
 	
 	var showPollsListView = function(){
+		//hide the illustration 
 		$('#create-poll-container').hide();
 		$('#polls-list-container').show();
 	}
