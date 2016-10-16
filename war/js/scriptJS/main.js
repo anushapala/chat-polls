@@ -318,9 +318,17 @@ var PollOperations = (function($,window,document,undefined){
 				pollItem += '		<div class="poll-option">';
 				pollItem += '			<img class="icon" src="'+pollOptionsList[ind].pollOptionImageURL+'">';
 				
-				
-				var votesCount = 0;
+				//default selecting the poll option 
 				var likedList = pollOptionsList[ind].optionLikedList;
+				if( likedList.indexOf(Poll.getAppUser().id) > -1 ){
+					pollItem += ' 			<input class="input_default  option-holder selected" type="text" readonly value="'+pollOptionsList[ind].pollOptionText+'"/>';	
+				}else{
+					pollItem += ' 			<input class="input_default  option-holder" type="text" readonly value="'+pollOptionsList[ind].pollOptionText+'"/>';	
+				}
+				pollItem += '		</div>';
+				
+				//showing the count of the votes
+				var votesCount = 0;
 				if(likedList.length != 0 ){
 					if(likedList.indexOf(Poll.getAppUser().id) > -1 ){
 						if(likedList.length == 1){
@@ -338,31 +346,14 @@ var PollOperations = (function($,window,document,undefined){
 				}else{
 					votesCount = likedList.length + " votes";
 				}
-				
-				var optionLikedList = pollOptionsList[ind].optionLikedList;
-				for( var polloptId in optionLikedList){
-					if(optionLikedList[polloptId].indexOf(Poll.getAppUser().id) > -1){
-						showNotification = false;
-						break;
-					}
-				}
-				
-				if(showNotification){
-					pollItem += ' 			<input class="input_default  option-holder" type="text" readonly value="'+pollOptionsList[ind].pollOptionText+'"/>';
-				}else{
-					pollItem += ' 			<input class="input_default  option-holder selected" type="text" readonly value="'+pollOptionsList[ind].pollOptionText+'"/>';
-				}
-				
-				pollItem += '		</div>';
+								
 				pollItem += '		<code>'+votesCount+'</code>';
 				pollItem += '	</div>';
 				pollItemsList += pollItem;
 			}
 			
 			var pollDomItem = '<li class="question" id="'+pollQuestionDetails.pollID+'_pollID">';
-			if(showNotification){
-				pollDomItem += '		<span class="notification"></span>';
-			}
+//			pollDomItem += '		<span class="notification"></span>';
 			pollDomItem += '		<h5 class="name" id="'+pollQuestionDetails.createdBy+'_pollOnwer">anusha</h5>';
 			pollDomItem += '		<p>'+pollQuestionDetails.pollQuestion+'</p>';
 			pollDomItem += '		<div class="contract">';
@@ -379,6 +370,8 @@ var PollOperations = (function($,window,document,undefined){
 			
 			if('prependNewPoll' == requestionFrom){
 				$('#polls-list').prepend(pollDomItem);
+				$(this).find('div.contract').slideUp('3000')
+
 			}else{
 				$('#polls-list').append(pollDomItem);
 			}
