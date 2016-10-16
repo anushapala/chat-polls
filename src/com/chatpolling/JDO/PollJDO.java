@@ -12,20 +12,20 @@ public class PollJDO implements Serializable {
 	 * 
 	 */
 	private static final long serialVersionUID = 2965690203852718173L;
-	
+
 	@PrimaryKey
 	String pollID = "";
-	
+
 	String streamID = "";
-	
-	String createdBy = "";
 
 	String pollQuestion = "";
-	
+
 	String pollDescription = "";
-	
+
+	String createdBy = "";
+
 	Long createdTime = new Date().getTime();
-	
+
 	Long endedTime = new Date().getTime();
 
 	public String getPollID() {
@@ -43,15 +43,7 @@ public class PollJDO implements Serializable {
 	public void setStreamID(String streamID) {
 		this.streamID = streamID;
 	}
-	
-	public String getCreatedBy() {
-		return createdBy;
-	}
 
-	public void setCreatedBy(String createdBy) {
-		this.createdBy = createdBy;
-	}
-	
 	public String getPollQuestion() {
 		return pollQuestion;
 	}
@@ -70,6 +62,14 @@ public class PollJDO implements Serializable {
 
 	public Long getCreatedTime() {
 		return createdTime;
+	}
+
+	public String getCreatedBy() {
+		return createdBy;
+	}
+
+	public void setCreatedBy(String createdBy) {
+		this.createdBy = createdBy;
 	}
 
 	public void setCreatedTime(Long createdTime) {

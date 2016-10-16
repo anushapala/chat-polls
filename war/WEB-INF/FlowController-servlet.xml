@@ -13,12 +13,12 @@
     <mvc:annotation-driven />
     <context:component-scan base-package="com.chatpolling.web.Controller"/>
     
- 	<bean id="viewResolver" class="org.springframework.web.servlet.view.ResourceBundleViewResolver">
+ 	<!-- <bean id="viewResolver" class="org.springframework.web.servlet.view.ResourceBundleViewResolver">
 		<property name="basename" value="views"/>					
-	</bean>
+	</bean> -->
  
  	<bean class="org.springframework.web.servlet.view.InternalResourceViewResolver">
-      <property name="prefix" value="/pages" />
+      <property name="prefix" value="/pages/" />
       <property name="suffix" value=".jsp" />
    	</bean>	
 

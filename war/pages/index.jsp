@@ -1,3 +1,7 @@
+<%@page import="com.google.appengine.api.blobstore.BlobstoreServiceFactory"%>
+<%@page import="com.google.appengine.api.blobstore.BlobstoreService"%>
+<%@ page language="java" contentType="text/html; charset=UTF-8"
+    pageEncoding="UTF-8"%>
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
 <!-- The HTML 4.01 Transitional DOCTYPE declaration-->
 <!-- above set at the top of the file will set     -->
@@ -6,14 +10,13 @@
 <!-- with a "Standards Mode" doctype is supported, -->
 <!-- but may lead to some differences in layout.   -->
 
+
 <html>
   <head>
     <meta http-equiv="content-type" content="text/html; charset=UTF-8">
     <title>Polls</title>
     <link rel="stylesheet" type="text/css" href="/css/scriptCSS/main.css"/> 
-    
   </head>
-
   <body>
   	<section class="Polling wrapper">
         <h3>Create a Poll</h3>
@@ -26,18 +29,16 @@
 	            <label class="input_label">option 1:</label>
 	            <div class="poll-option">
 	              <img class="icon picture-upload" id="img1">
-	              <input type="file" style="visibility: hidden;display:none" id="imgupload1">
+	              <input type="file" style="visibility: hidden;display:none" id="imgupload1" name="file1">
 	              <input class="input_default input_small option-holder" type="text" placeholder="Enter option here...">
-	              <!-- <span class="delete"></span> -->
 	            </div>
 	        </div>
 	        <div>
 	            <label class="input_label">option 2:</label>
 	            <div class="poll-option">
 	              <img class="icon picture-upload" id="img2">
-	              <input type="file" style="visibility: hidden;display:none" id="imgupload2">
+	              <input type="file" style="visibility: hidden;display:none" id="imgupload2" name="file2">
 	              <input class="input_default input_small option-holder" type="text" placeholder="Enter option here...">
-	              <!-- <span class="delete"></span> -->
 	            </div>
 	        </div>
         </div>
@@ -79,6 +80,7 @@
     </section>
  	<script type="text/javascript" src="/js/libJS/jquery-2.2.0.min.js"></script>
  	<script type="text/javascript" src="/js/libJS/aaf_sdk_min.js"></script>
+ 	<script type="text/javascript" src="/js/libJS/ajaxfileupload.min.js"></script>
   	<script type="text/javascript" src="/js/scriptJS/main.js"></script>
   </body>
 </html>
