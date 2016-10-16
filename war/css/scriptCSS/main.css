@@ -76,9 +76,18 @@ font-weight: 300;
 .polling-station .input_default {
 	cursor:pointer;	
 }
+.selected{
+    background: url(/images/tick.png) no-repeat;
+    width: 20px;
+    height: 20px;
+    position: absolute;
+    bottom: 5px;
+    right: 10px;
+}
 
 .input_label {
 font-size: 12px;
+font-weight: 500;
 color: #7f8796;
 text-transform: uppercase;
 display: block;
@@ -271,7 +280,7 @@ li.question{
 	display : none;
 	position : absolute;
 	top : 0;
-	left : 490px;
+	left : 0;
 	width : 300px;
 	height : 430px;
 	background-color : #fff;
@@ -282,7 +291,7 @@ li.question{
 .loader{
 	display: none;
     position: absolute;
-    top: 30%;
+    top: 50%;
     left: 49%;
     z-index: 1001;
 }
@@ -293,6 +302,20 @@ li.question{
 
 .contract {
 	margin: 0 !important;
+}
+
+.empty-state img{
+    margin: 120px 80px 10px 80px;
+}
+.empty-state h2{
+    text-align: center;
+    font-size: 30px;
+    font-weight: 400;
+    color: #7F8796;
+}
+.empty-state button{
+    float: none;
+    margin: 30px auto 55px auto;
 }
 
 */

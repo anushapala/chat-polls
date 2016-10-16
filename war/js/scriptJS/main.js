@@ -88,7 +88,7 @@ $(document.body).on('click','.delete',function(){
 	});
 });
 
-$(document.body).on('click','#create-new-poll',function(){
+$(document.body).on('click','#create-new-poll, #create_a_poll',function(){
 	PollOperations.showCreateNewPollView();
 });
 
@@ -154,6 +154,12 @@ var hideLoader = function(){
 	$('#overlay, #loader').hide();
 }
 
+var showPollEmptyState(){
+	$('#create-poll-container').hide();
+	$('#polls-list-container').hide();
+	$('#empty_poll_container').show();
+}
+
 var Poll = (function($,window,document,undefined){
 	
 	
@@ -169,11 +175,15 @@ var Poll = (function($,window,document,undefined){
 		app.on('activated',function(data){
 			   console.error("On app activation.",data);
 			  _context = data.context;
+			  
+			  $('#empty_poll_container').hide();
 			});
 
 		app.on('context-change',function(data){
 				console.error("On context change.",data);
 				_context = data.context;
+				
+				$('#empty_poll_container').hide();
 			});
 
 		app.on('deactivated',function(data){
@@ -283,10 +293,10 @@ var PollOperations = (function($,window,document,undefined){
 					if( response.PollsDetailsList != 'undefined' && response.PollsDetailsList != null ){
 						PollOperations.diplayPollsList(response.PollsDetailsList,'listAllPoll');
 					}else{
-						$('#polls-list').html("<p>No Polls Yet!</p>");
+						showPollEmptyState();
 					}
 				}else{
-					$('#polls-list').html("<p>No Polls Yet!</p>");
+					showPollEmptyState();
 				}
 				hideLoader();
 			},
@@ -439,6 +449,7 @@ var PollOperations = (function($,window,document,undefined){
 	};
 	
 	var showCreateNewPollView = function(){
+		$('#empty_poll_container').hide();
 		$('#polls-list-container').hide();
 		$('#create-poll-container').find('textarea').val("");
 		$('#create-poll-container').find('input').val("");
