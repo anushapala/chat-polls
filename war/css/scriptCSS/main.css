@@ -70,7 +70,7 @@ box-sizing: border-box;
     padding: 0 0 0 10px;
     outline: 0;
     border-radius: 3px;
-    width: 186px;
+    width: 211px;
 }
 
 .polling-station .input_default {
@@ -156,6 +156,7 @@ button{
     box-shadow: inset 0 1px 3px 0 rgba(0,0,0,.05);
     width: 256px;
     border-radius: 4px;
+    position:relative;
 }
 
 .poll-option:hover  span.delete{
@@ -163,10 +164,12 @@ button{
 }
 
 .poll-option span.delete{
-	background: url(/images/close.png) no-repeat center top 10px;
-    width: 20px;
-    height: 20px;
-    float: right;
+	background: url(/images/close.png) no-repeat;
+    width: 10px;
+    height: 10px;
+    position : absolute;
+    bottom :10px;
+    right:	10px;
     display:none;
     cursor: pointer;
 }
@@ -260,6 +263,12 @@ li{
     margin: 0px -20px 0px -20px;
     cursor :pointer;
 }
+
+.selected{
+	background-color: rgba(94,242,200,.10);
+	border-color: #4DAAD0;	
+}
+
 
 */
 @media (-webkit-min-device-pixel-ratio: 2), (min-resolution: 192dpi) {
