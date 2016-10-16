@@ -12,17 +12,18 @@ public class PollItemJDO implements Serializable {
 	 * 
 	 */
 	private static final long serialVersionUID = -8706921670889027472L;
-
+	
 	@PrimaryKey
 	String pollOptionID = "";
-
+	
 	String pollID = "";
 
 	String pollOptionText = "";
-
+	
 	String pollOptionImageURL = "";
-
+	
 	ArrayList<String> optionLikedList = new ArrayList<String>();
+	
 
 	public String getPollOptionID() {
 		return pollOptionID;
@@ -55,7 +56,7 @@ public class PollItemJDO implements Serializable {
 	public void setPollOptionImageURL(String pollOptionImageURL) {
 		this.pollOptionImageURL = pollOptionImageURL;
 	}
-
+	
 	public ArrayList<String> getOptionLikedList() {
 		return optionLikedList;
 	}
@@ -63,5 +64,5 @@ public class PollItemJDO implements Serializable {
 	public void setOptionLikedList(ArrayList<String> optionLikedList) {
 		this.optionLikedList = optionLikedList;
 	}
-
-}
+	
+}	

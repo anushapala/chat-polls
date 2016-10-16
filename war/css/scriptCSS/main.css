@@ -36,16 +36,16 @@
 
 }
 .polling{
-width: 300px;
-margin: 0 auto;
-padding: 20px 20px 55px 20px;
-border:1px solid #d8dce1;
-border-radius: 3px;
-box-shadow: inset 0 1px 3px 0 rgba(0,0,0,0.5);
-box-sizing: border-box;
+    width: 300px;
+    margin: 0 auto;
+    padding: 20px 0 55px 0;
+    border: 1px solid #d8dce1;
+    border-radius: 3px;
+    box-shadow: inset 0 1px 3px 0 rgba(0,0,0,0.5);
+    box-sizing: border-box;
 }
 .polling button{
-    margin-top: 10px;
+    margin: 10px 20px 10px 0px;
 }
 .textarea_default {
 background-color: #fff;
@@ -54,27 +54,32 @@ box-shadow: inset 0 1px 3px 0 rgba(0,0,0,.05);
 padding: 10px;
 outline: 0;
 border-radius: 3px;
-width: 260px;
+width: 258px;
 resize: none;
 font-size: 14px;
 font-weight: 300;
 }
 .input_default {
-background-color: #fff;
-border: 1px solid #d8dce1;
-box-shadow: inset 0 1px 3px 0 rgba(0,0,0,.05);
-padding: 0 0 0 10px;
-outline: 0;
-border-radius: 3px;
-/*width: 298px;*/
+    height: 30px;
+    font-size: 14px;
+    font-weight: 400;
+    background-color: #fff;
+    border: 1px solid #d8dce1;
+    border-left: 0;
+    box-shadow: inset 0 1px 3px 0 rgba(0,0,0,.05);
+    padding: 0 0 0 10px;
+    outline: 0;
+    border-radius: 3px;
+    width: 211px;
 }
-.input_small {
-height: 30px;
-font-size: 14px;
-font-weight: 300;
+
+.polling-station .input_default {
+	cursor:pointer;	
 }
+
 .input_label {
 font-size: 12px;
+font-weight: 500;
 color: #7f8796;
 text-transform: uppercase;
 display: block;
@@ -120,8 +125,9 @@ background-color: #83C447;
     margin: 20px 0px;
 }
 .polling h3{
-    color:#2B333D;
+	color: #2B333D;
     font-size: 16px;
+    margin: 0 20px;
 }
 .add{
     color:#21ABF0;
@@ -150,7 +156,9 @@ button{
     background-color: #fff;
     border: 1px solid #d8dce1;
     box-shadow: inset 0 1px 3px 0 rgba(0,0,0,.05);
-    width: 260px;
+    width: 256px;
+    border-radius: 4px;
+    position : relative;
 }
 
 .poll-option:hover  span.delete{
@@ -158,12 +166,18 @@ button{
 }
 
 .poll-option span.delete{
-	background: url(/images/close.png) no-repeat center top 10px;
-    width: 20px;
-    height: 20px;
-    float: right;
+	background: url(/images/close.png) no-repeat;
+    width: 10px;
+    height: 10px;
+    position : absolute;
+    bottom : 10px;
+  	right : 10px;
     display:none;
     cursor: pointer;
+}
+
+.selected{
+	background: url(/images/tick.png) no-repeat bottom 5px right 10px;
 }
 
 .icon{
@@ -186,7 +200,6 @@ button{
     background-color: transparent;
     border: 0;
     box-shadow: none;
-    cursor:pointer;
 }
 
 .polling .poll-option{
@@ -196,6 +209,7 @@ button{
     font-size: 14px;
     color:#7F8796;
     font-weight: 400;
+    line-height:18px;
 }
 .polling-station cite{
     font-size:12px;
@@ -207,14 +221,98 @@ button{
 }
 .polling-station code{
     font-size: 10px;
-    color: #7F8796;
+    color: #5EC8F2;
     float: right;
     margin-top: 5px;
 }
-/*
-.polling-station button{
-    margin-top: 20px;
+.question .name{
+    font-size: 14px;
+    color:#2B333D;
+    font-weight: 600;
+    margin-bottom: 5px;
+    line-height:18px;
 }
+.polling-station ul{
+    margin-top: 10px;
+}
+.polling-station .option-container{
+    margin:10px 0;
+}
+.polling-station .expand{
+    margin:0;
+}
+
+.polling-station .contract{
+	display:none;
+}
+.notification{
+    background: url(/images/notification.png) no-repeat top 5px left 4px;
+    width: 15px;
+    height: 15px;
+    float: left;
+    margin-left: -15px;
+}
+ul{
+    max-height: 324px;
+    height: 100%;
+    overflow: auto;
+}
+.container{
+    max-height: 294px;
+    height: 100%;
+    overflow: auto;
+    padding: 0 20px;
+}
+li.question{
+   	list-style: none;
+    border-bottom: 1px solid #E4E6EA;
+    padding: 5px 20px 15px;
+    cursor: pointer;
+    margin: 0;
+}
+
+.overlay{
+	display : none;
+	position : absolute;
+	top : 0;
+	left : 0;
+	width : 300px;
+	height : 430px;
+	background-color : #fff;
+	opacity : 0.5;
+	z-index : 999;
+	margin : 0 !important;
+}
+.loader{
+	display: none;
+    position: absolute;
+    top: 50%;
+    left: 49%;
+    z-index: 1001;
+}
+
+.wrapper {
+	position: relative;
+}
+
+.contract {
+	margin: 0 !important;
+}
+
+.empty-state img{
+    margin: 120px 80px 10px 80px;
+}
+.empty-state h2{
+    text-align: center;
+    font-size: 30px;
+    font-weight: 400;
+    color: #7F8796;
+}
+.empty-state button{
+    float: none;
+    margin: 30px auto 55px auto;
+}
+
 */
 @media (-webkit-min-device-pixel-ratio: 2), (min-resolution: 192dpi) {
    .picture-upload{
