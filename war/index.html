@@ -15,78 +15,83 @@
   </head>
 
   <body>
-  	<section class="Polling">
+  <div class="wrapper">
+  	<section class="Polling" id="create-poll-container" style="display: block";>
         <h3>Create a Poll</h3>
         <div class="container">
-            <div class="question" id="poll-question">
-                <label class="input_label">Question</label>
-                <textarea class="textarea_default" type="text" placeholder="Enter question here..."></textarea>
-            </div>
-            <div id="poll-option-container">
-                <div>
-                    <label class="input_label">option 1:</label>
-                    <div class="poll-option">
-                      <img class="icon picture-upload" data-imgId="img1">
-                      <input type="file" style="visibility: hidden;display:none" id="imgupload1">
-                      <input class="input_default input_small option-holder" type="text" placeholder="Enter option here...">
-                    </div>
-                </div>
-                <div>
-                    <label class="input_label">option 2:</label>
-                    <div class="poll-option">
-                      <img class="icon picture-upload" data-imgId="img2">
-                      <input type="file" style="visibility: hidden;display:none" id="imgupload2">
-                      <input class="input_default input_small option-holder" type="text" placeholder="Enter option here...">
-                    </div>
-                </div>
-            </div>
-
-            <span class="add" id="add-option">+Add More</span>
-            <div>
-                <label class="input_label">Description</label>
-                <textarea class="textarea_default" type="text" placeholder="Enter Comments here..."></textarea>
-            </div>
-            <span class="checkbox checkbox_active"></span>
-            <span class="options">Allow to select multiple options</span>
+        <div class="question" id="poll-question">
+        <label class="input_label">Question</label>
+        <textarea class="textarea_default" type="text" placeholder="Enter question here..."></textarea>
         </div>
-        <button class="btn btn_primary">Create</button>
+        <div id="poll-option-container">
+	        <div>
+	            <label class="input_label">option 1:</label>
+	            <div class="poll-option">
+	              <img class="icon picture-upload" id="img1">
+	              <input type="file" style="visibility: hidden;display:none" id="imgupload1">
+	              <input class="input_default option-holder" type="text" placeholder="Enter option here...">
+	            </div>
+	        </div>
+	        <div>
+	            <label class="input_label">option 2:</label>
+	            <div class="poll-option">
+	              <img class="icon picture-upload" id="img2">
+	              <input type="file" style="visibility: hidden;display:none" id="imgupload2">
+	              <input class="input_default option-holder" type="text" placeholder="Enter option here...">
+	            </div>
+	        </div>
+        </div>
+
+        <span class="add" id="add-option">+Add More</span>
+        <div id="poll-description">
+            <label class="input_label">Description</label>
+            <textarea class="textarea_default" type="text" placeholder="Enter Comments here..."></textarea>
+        </div>
+        <!-- <span class="checkbox checkbox_active"></span>
+        <span class="options">Allow to select multiple options</span> -->
+        </div>
+        <button class="btn btn_primary" id="create-poll">Create</button>
     </section>
+    
     <!---polling station-->
-      <section class="Polling polling-station" style="display: none";>
+      <section class="Polling polling-station"  id="polls-list-container"style="display: none";>
         <h3>Polls</h3>
-    <ul>
-        <li class="question">
+	    <ul id="polls-list">
+	        <li class="question">
                 <span class="notification"></span>
                 <h5 class="name">Santhosh</h5>
                 <p>Which image should go as our group profile picture?</p>
-                <div class="expand contract">
+                <div class="contract">
                     <cite>This poll is to select the most liked profile picture</cite>
                     <div class="option-container">
-                    
-                    <div>
-                    <label class="input_label">option 1:</label>
-                    <div class="poll-option">
-                        <i class="icon picture-upload"></i>
-                        <input class="input_default input_small option-holder" type="text" placeholder="Enter option here...">
+	                    <div>
+	                    <label class="input_label">option 1:</label>
+	                    <div class="poll-option">
+	                        <i class="icon picture-upload"></i>
+	                        <input class="input_default option-holder" type="text" placeholder="Enter option here...">
+	                    </div>
+	                    <code>22 votes</code>
+	                     </div>
+	                     <div>
+	                        <label class="input_label">option 2:</label>
+	                        <div class="poll-option">
+	                            <i class="icon picture-upload"></i>
+	                            <input class="input_default option-holder" type="text" placeholder="Enter option here...">
+	                        </div>
+	                        <code>5 votes</code>
+	                    </div>
                     </div>
-                    <code>22 votes</code>
-                     </div>
-                     <div>
-                        <label class="input_label">option 2:</label>
-                        <div class="poll-option">
-                            <i class="icon picture-upload"></i>
-                            <input class="input_default input_small option-holder" type="text" placeholder="Enter option here...">
-                        </div>
-                        <code>5 votes</code>
-                    </div>
-                    
-                    
-                    </div>
-            </div>
-        </li>
-    </ul>
-        <button class="btn btn_primary">Share</button>
+            	</div>
+	        </li>
+	    </ul>
+        <button class="btn btn_primary" id="create-new-poll">Create new poll</button>
     </section>
+
+   </div>
+   
+   <div id="overlay" class="overlay"></div>
+   <div id="loader" class="loader"><img src="/images/loader_small.gif"/></div>
+   
  	<script type="text/javascript" src="/js/libJS/jquery-2.2.0.min.js"></script>
  	<script type="text/javascript" src="/js/libJS/aaf_sdk_min.js"></script>
   	<script type="text/javascript" src="/js/scriptJS/main.js"></script>

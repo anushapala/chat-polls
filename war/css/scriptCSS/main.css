@@ -70,15 +70,13 @@ font-weight: 300;
     padding: 0 0 0 10px;
     outline: 0;
     border-radius: 3px;
-    width: 83%;
+    width: 186px;
 }
-/*
-.input_small {
-height: 30px;
-font-size: 14px;
-font-weight: 300;
+
+.polling-station .input_default {
+	cursor:pointer;	
 }
-*/
+
 .input_label {
 font-size: 12px;
 color: #7f8796;
@@ -159,6 +157,20 @@ button{
     width: 256px;
     border-radius: 4px;
 }
+
+.poll-option:hover  span.delete{
+	display:block;
+}
+
+.poll-option span.delete{
+	background: url(/images/close.png) no-repeat center top 10px;
+    width: 20px;
+    height: 20px;
+    float: right;
+    display:none;
+    cursor: pointer;
+}
+
 .icon{
     width: 40px;
     height: 30px;
@@ -188,6 +200,7 @@ button{
     font-size: 14px;
     color:#7F8796;
     font-weight: 400;
+    line-height:18px;
 }
 .polling-station cite{
     font-size:12px;
@@ -208,6 +221,7 @@ button{
     color:#2B333D;
     font-weight: 600;
     margin-bottom: 5px;
+    line-height:18px;
 }
 .polling-station ul{
     margin-top: 10px;
@@ -217,6 +231,10 @@ button{
 }
 .polling-station .expand{
     margin:0;
+}
+
+.polling-station .contract{
+	display:none;
 }
 .notification{
     background: url(/images/notification.png) no-repeat top 5px left 4px;
@@ -235,12 +253,38 @@ ul{
     height: 100%;
     overflow: scroll;
 }
-li{
+li.question{
     list-style: none;
     border-bottom: 1px solid #E4E6EA;
     padding: 5px 20px 15px 20px;
     margin: 0px -20px 0px -20px;
+    cursor: pointer;
 }
+
+.overlay{
+	display : none;
+	position : absolute;
+	top : 0;
+	left : 490px;
+	width : 300px;
+	height : 430px;
+	background-color : #fff;
+	opacity : 0.5;
+	z-index : 999;
+	margin : 0 !important;
+}
+.loader{
+	display: none;
+    position: absolute;
+    top: 40%;
+    left: 49%;
+    z-index: 1001;
+}
+
+.wrapper {
+	position: relative;
+}
+
 */
 @media (-webkit-min-device-pixel-ratio: 2), (min-resolution: 192dpi) {
    .picture-upload{
