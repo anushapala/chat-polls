@@ -73,6 +73,10 @@ font-weight: 300;
     width: 186px;
 }
 
+.polling-station .input_default {
+	cursor:pointer;	
+}
+
 .input_label {
 font-size: 12px;
 color: #7f8796;
@@ -249,11 +253,36 @@ ul{
     height: 100%;
     overflow: scroll;
 }
-li{
+li.question{
     list-style: none;
     border-bottom: 1px solid #E4E6EA;
     padding: 5px 20px 15px 20px;
     margin: 0px -20px 0px -20px;
+    cursor: pointer;
+}
+
+.overlay{
+	display : none;
+	position : absolute;
+	top : 0;
+	left : 490px;
+	width : 300px;
+	height : 430px;
+	background-color : #fff;
+	opacity : 0.5;
+	z-index : 999;
+	margin : 0 !important;
+}
+.loader{
+	display: none;
+    position: absolute;
+    top: 40%;
+    left: 49%;
+    z-index: 1001;
+}
+
+.wrapper {
+	position: relative;
 }
 
 */

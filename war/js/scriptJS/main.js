@@ -15,7 +15,7 @@ $(document).ready(function(){
 	    domElement += '		<div class="poll-option">';
 	    domElement += '			<img class="icon picture-upload" id= img'+optionsCount+'>';
 	    domElement += '			<input type="file" style="visibility: hidden;display:none" id=imgupload'+optionsCount+'>';
-	    domElement += '         <input class="input_default input_small option-holder" type="text" placeholder="Enter option here...">';
+	    domElement += '         <input class="input_default option-holder" type="text" placeholder="Enter option here...">';
 	    domElement += '	 		<span class="delete"></span>';
 	    domElement += '		</div>';
 	    domElement += '	  </div>';
@@ -78,6 +78,11 @@ $(document.body).on('change','input:file', function () {
 
 $(document.body).on('click','.delete',function(){
 	$(this).parent('div.poll-option').parent('div').remove();
+	var optionCount = 1;
+	$('#poll-option-container>div').each(function(){
+		$(this).find('label.input_label').html('option ' + optionCount);
+		optionCount++;
+	});
 });
 
 $(document.body).on('click','#create-new-poll',function(){
@@ -243,6 +248,8 @@ var PollOperations = (function($,window,document,undefined){
 				console.log(response);
 				if(response.success){
 					PollOperations.diplayPollsList(response.PollsDetailsList);
+				}else{
+					$('#polls-list').html("<p>No Polls Yet!</p>");
 				}
 			},
 			error :function(errResp){
@@ -268,7 +275,7 @@ var PollOperations = (function($,window,document,undefined){
 				pollItem += '		<label class="input_label">option '+count+':</label>';
 				pollItem += '		<div class="poll-option">';
 				pollItem += '			<img class="icon" src="'+pollOptionsList[ind].pollOptionImageURL+'">';
-				pollItem += ' 			<input class="input_default input_small option-holder" type="text" readonly value="'+pollOptionsList[ind].pollOptionText+'"/>';
+				pollItem += ' 			<input class="input_default option-holder" type="text" readonly value="'+pollOptionsList[ind].pollOptionText+'"/>';
 				pollItem += '		</div>';
 				if(pollOptionsList[ind].optionLikedList != null ){
 					pollItem += '		<code>'+pollOptionsList[ind].optionLikedList.length+' votes</code>';
@@ -281,7 +288,7 @@ var PollOperations = (function($,window,document,undefined){
 			
 			var pollDomItem = '<li class="question" id="'+pollQuestionDetails.pollID+'">';
 			pollDomItem += '		<span class="notification"></span>';
-			pollDomItem += '		<h5 class="name" id="'+pollQuestionDetails.createdBy+'">anusha</h5>';
+			pollDomItem += '		<h5 class="name" id="'+pollQuestionDetails.createdBy+'">' + pollQuestionDetails.createdUserName + '</h5>';
 			pollDomItem += '		<p>'+pollQuestionDetails.pollQuestion+'</p>';
 			pollDomItem += '		<div class="contract">';
 			pollDomItem += '			<cite>'+pollQuestionDetails.pollDescription+'</cite>';
