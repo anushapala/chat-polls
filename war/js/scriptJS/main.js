@@ -15,7 +15,7 @@ $(document).ready(function(){
 	    domElement += '		<div class="poll-option">';
 	    domElement += '			<img class="icon picture-upload" id= img'+optionsCount+'>';
 	    domElement += '			<input type="file" style="visibility: hidden;display:none" id=imgupload'+optionsCount+'>';
-	    domElement += '         <input class="input_default input_small option-holder" type="text" placeholder="Enter option here...">';
+	    domElement += '         <input class="input_default  option-holder" type="text" placeholder="Enter an option..">';
 	    domElement += '	 		<span class="delete"></span>';
 	    domElement += '		</div>';
 	    domElement += '	  </div>';
@@ -86,6 +86,18 @@ $(document.body).on('click','#create-new-poll',function(){
 
 $(document.body).on('click','#polls-list li',function(){
 	$(this).find('div.contract').slideToggle('3000')
+});
+
+$(document.body).on('click','#polls-list-container input.option-holder',function(e){
+	e.stopImmediatePropagation();
+	
+	var pollOptionID = $(this).parents('div.poll-opt-div').attr('id').split('_')[0];
+	var pollID = $(this).parents('li').attr('id').split('_')[0];
+//	var contactID = Poll.getAppUser().id;
+	//var contactID = '103701';
+	var contactID = '103650';
+	
+	PollOperations.updatePoll(pollID,pollOptionID,contactID);
 });
 
 function showImage(id, fileInput) {
@@ -209,8 +221,13 @@ var PollOperations = (function($,window,document,undefined){
 				console.log(response);
 				if(response.success){
 					var pollArray = [];
-					pollArray.push(response);
-					PollOperations.diplayPollsList(pollArray);
+					var pollObj = {
+							'pollQuestionDetails' : response.pollQuestionDetails,
+							'pollOptionsList' : response.pollOptionsList
+					}
+					
+					pollArray.push(pollObj);
+					PollOperations.diplayPollsList(pollArray,'prependNewPoll');
 				}else{
 					console.log(response);
 				}
@@ -242,7 +259,7 @@ var PollOperations = (function($,window,document,undefined){
 			success: function(response){
 				console.log(response);
 				if(response.success){
-					PollOperations.diplayPollsList(response.PollsDetailsList);
+					PollOperations.diplayPollsList(response.PollsDetailsList,'listAllPoll');
 				}
 			},
 			error :function(errResp){
@@ -251,9 +268,12 @@ var PollOperations = (function($,window,document,undefined){
 		});
 	};
 	
-	var diplayPollsList = function(pollsList){
+	var diplayPollsList = function(pollsList, requestionFrom){
 		//show the loader goes here
-		$('#polls-list').html("");
+		
+		if('listAllPoll' == requestionFrom){
+			$('#polls-list').html("");
+		}
 		
 		for(var index in pollsList){
 			
@@ -262,36 +282,69 @@ var PollOperations = (function($,window,document,undefined){
 			
 			var pollItemsList = "";
 			var count = 0;
+			var showNotification = false;
 			for(var ind in pollOptionsList){
 				count = count+1;
-				var pollItem = '<div id="'+pollOptionsList[ind].pollOptionID+'">';
+				var pollItem = '<div class="poll-opt-div" id="'+pollOptionsList[ind].pollOptionID+'_optionID">';
 				pollItem += '		<label class="input_label">option '+count+':</label>';
 				pollItem += '		<div class="poll-option">';
 				pollItem += '			<img class="icon" src="'+pollOptionsList[ind].pollOptionImageURL+'">';
-				pollItem += ' 			<input class="input_default input_small option-holder" type="text" readonly value="'+pollOptionsList[ind].pollOptionText+'"/>';
+				pollItem += ' 			<input class="input_default  option-holder" type="text" readonly value="'+pollOptionsList[ind].pollOptionText+'"/>';
 				pollItem += '		</div>';
-				if(pollOptionsList[ind].optionLikedList != null ){
-					pollItem += '		<code>'+pollOptionsList[ind].optionLikedList.length+' votes</code>';
+				
+				var count = 0;
+				var likedList = pollOptionsList[ind].optionLikedList;
+				if(likedList.length != 0 ){
+					if(likedList.indexOf('103650') > -1 ){
+						if(likedList.length == 1){
+							count = likedList.length+ " vote - You voted";
+						}else{
+							count = likedList.length+ " votes - You voted"
+						}
+					}else{
+						if(likedList.length == 1){
+							count = likedList.length + " vote";
+						}else{
+							count = likedList.length + " votes";
+						}
+					}
 				}else{
-					pollItem += '		<code> 0 votes</code>';
+					count = likedList.length + " votes";
+				}
+				
+				pollItem += '		<code>'+count+'</code>';
+				
+				var optionLikedList = pollOptionsList[ind].optionLikedList;
+				for( var polloptId in optionLikedList){
+					if(optionLikedList[polloptId].indexOf(/*Poll.getAppUser().id*/ "103650") > -1){
+						showNotification = true;
+						break;
+					}
 				}
 				pollItem += '	</div>';
 				pollItemsList += pollItem;
 			}
 			
-			var pollDomItem = '<li class="question" id="'+pollQuestionDetails.pollID+'">';
-			pollDomItem += '		<span class="notification"></span>';
-			pollDomItem += '		<h5 class="name" id="'+pollQuestionDetails.createdBy+'">anusha</h5>';
+			var pollDomItem = '<li class="question" id="'+pollQuestionDetails.pollID+'_pollID">';
+			if(showNotification){
+				pollDomItem += '		<span class="notification"></span>';
+			}
+			pollDomItem += '		<h5 class="name" id="'+pollQuestionDetails.createdBy+'_pollOnwer">anusha</h5>';
 			pollDomItem += '		<p>'+pollQuestionDetails.pollQuestion+'</p>';
 			pollDomItem += '		<div class="contract">';
 			pollDomItem += '			<cite>'+pollQuestionDetails.pollDescription+'</cite>';
-			pollDomItem += '			<div calss="option-container">';
+			pollDomItem += '			<div class="option-container">';
 			pollDomItem += 					pollItemsList;		
 			pollDomItem += '			</div>';
 			pollDomItem += '		</div>';
 			pollDomItem += '	</li>';
 			
-			$('#polls-list').append(pollDomItem);
+			if('prependNewPoll' == requestionFrom){
+				$('#polls-list').prepend(pollDomItem);
+			}else{
+				$('#polls-list').append(pollDomItem);
+			}
+	
 		}
 		
 		PollOperations.showPollsListView();
@@ -310,8 +363,7 @@ var PollOperations = (function($,window,document,undefined){
 				'contactID' : contactID
 		}
 		
-		var responseJSON = JSON.strinfigy(requestMap);
-		
+		var responseJSON = JSON.stringify(requestMap);
 		
 		$.ajax({
 			type : 'POST',
@@ -320,10 +372,35 @@ var PollOperations = (function($,window,document,undefined){
 			dataType : 'json',
 			contentType:'application/json',
 			success : function(response){
-				if(resposne.success){
+				if(response.success){
+					var pollOptionsList = response.pollOptionsList;
 					
-					//do the update front end action. 
-					
+					for(var index in pollOptionsList){
+						var likedList = pollOptionsList[index].optionLikedList;
+						var pollOptionID = pollOptionsList[index].pollOptionID +"_optionID";
+						
+						var count = 0;
+						if(likedList.length != 0 ){
+							if(likedList.indexOf('103650') > -1 ){
+								if(likedList.length == 1){
+									count = likedList.length+ " vote - You voted";
+								}else{
+									count = likedList.length+ " votes - You voted"
+								}
+							}else{
+								if(likedList.length == 1){
+									count = likedList.length + " vote";
+								}else{
+									count = likedList.length + " votes";
+								}
+							}
+						}else{
+							count = likedList.length + " votes";
+						}
+						
+						$('#'+pollID+'_pollID').find('#'+pollOptionID).find('code').html(count);
+
+					}	
 				}
 				
 			},error : function(errResp){
