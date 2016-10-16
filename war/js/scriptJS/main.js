@@ -18,7 +18,7 @@ $(document).ready(function(){
 	    domElement += '         <input class="input_default input_small option-holder" type="text" placeholder="Enter option here...">';
 	    domElement += '	 		<span class="delete"></span>';
 	    domElement += '		</div>';
-	    domElement += '	  </div>';		
+	    domElement += '	  </div>';
 	    
 	    $('#poll-option-container').append(domElement);
 	});
@@ -176,7 +176,9 @@ var PollOperations = (function($,window,document,undefined){
 					//'streamID' : Poll.getContext().id,
 					'streamID' 		  :'3aab167e-fcb5-4b6a-a962-17c48551c204',
 					'createdBy' 	  : '5f3e80ff-e730-470f-a708-bb4639a55a6c',
-					'pollQuestion' 	  : pollQuestion,
+					'createdUserName' : 'anusha',
+					'createdUserImg'  : 'http://lh3.googleusercontent.com/gklzH6FsFJ0t8pyBDoiwUKMW34SDixebyqfdVt7BVvetxL-jksSsgQN69R0bf5gS0YCu038ziYCK28rt2vxDBQ-s8JbBfuOPl8D67YQ',
+ 					'pollQuestion' 	  : pollQuestion,
 					'pollDescription' : pollDescription
 				},
 				'pollOptionsDetails' : pollOptionsList
@@ -192,9 +194,14 @@ var PollOperations = (function($,window,document,undefined){
 			contentType:'application/json',
 			success : function(response){
 				console.log(response);
-				var pollArray = [];
-				pollArray.push(response);
-				PollOperations.diplayPollsList(pollArray);
+				if(response.success){
+					var pollArray = [];
+					pollArray.push(response);
+					PollOperations.diplayPollsList(pollArray);
+				}else{
+					console.log(response);
+				}
+				
 			},failure : function(errResp){
 				console.error(errResp);
 			}
@@ -219,7 +226,9 @@ var PollOperations = (function($,window,document,undefined){
 			contentType:'application/json',
 			success: function(response){
 				console.log(response);
-				PollOperations.diplayPollsList(response.PollsDetailsList);
+				if(response.success){
+					PollOperations.diplayPollsList(response.PollsDetailsList);
+				}
 			},failure :function(errResp){
 				console.error(errResp);
 			}
@@ -254,9 +263,9 @@ var PollOperations = (function($,window,document,undefined){
 				pollItemsList += pollItem;
 			}
 			
-			var pollDomItem = '<li class="question">';
+			var pollDomItem = '<li class="question" id="'+pollQuestionDetails.pollID+'">';
 			pollDomItem += '		<span class="notification"></span>';
-			pollDomItem += '		<h5 class="name">anusha</h5>';
+			pollDomItem += '		<h5 class="name" id="'+pollQuestionDetails.createdBy+'">anusha</h5>';
 			pollDomItem += '		<p>'+pollQuestionDetails.pollQuestion+'</p>';
 			pollDomItem += '		<div class="contract">';
 			pollDomItem += '			<cite>'+pollQuestionDetails.pollDescription+'</cite>';
