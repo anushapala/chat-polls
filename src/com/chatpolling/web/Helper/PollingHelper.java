@@ -30,10 +30,12 @@ public class PollingHelper {
 				
 				String streamID = (String) pollQuestionDetails.get("streamID");
 				String createdBy = (String)pollQuestionDetails.get("createdBy");
+				String createdUserName = (String)pollQuestionDetails.get("createdUserName");
+				String createdUserImg = (String)pollQuestionDetails.get("createdUserImg");
 				String pollQuestion = (String) pollQuestionDetails.get("pollQuestion");
 				String pollDescription = (String) pollQuestionDetails.get("pollDescription");
 				pollDescription = CommonUtil.isEmptyString(pollDescription) ? "" : pollDescription;
-				if( CommonUtil.isEmptyString(streamID) || CommonUtil.isEmptyString(createdBy) || CommonUtil.isEmptyString(pollQuestion) ){
+				if( CommonUtil.isEmptyString(streamID) || CommonUtil.isEmptyString(createdBy) || CommonUtil.isEmptyString(createdUserName) || CommonUtil.isEmptyString(createdUserImg) || CommonUtil.isEmptyString(pollQuestion) ){
 					responseMap.put("success", false);
 					responseMap.put("message", "Required details are empty!");
 				}else {
@@ -41,6 +43,8 @@ public class PollingHelper {
 					objPollJDO.setPollID(CommonUtil.getUniqueId());
 					objPollJDO.setStreamID(streamID);
 					objPollJDO.setCreatedBy(createdBy);
+					objPollJDO.setCreatedUserName(createdUserName);
+					objPollJDO.setCreatedUserImg(createdUserImg);
 					objPollJDO.setPollQuestion(pollQuestion);
 					objPollJDO.setPollDescription(pollDescription);
 					objPollJDO.setCreatedTime(new Date().getTime());
@@ -49,8 +53,6 @@ public class PollingHelper {
 					boolean isSaved = PollDAO.savePollJDO(objPollJDO);
 					
 					if(isSaved){
-						ArrayList<String> optionLinkedList = new ArrayList<String>();
-
 						for(HashMap<String, Object> singleOptionDetails : pollOptionsDetails){
 							String pollOptionText = (String) singleOptionDetails.get("pollOptionContent");
 							String pollOptionImageURL = (String) singleOptionDetails.get("pollOptionImageURL");
@@ -62,7 +64,7 @@ public class PollingHelper {
 								objPollItemJDO.setPollID(objPollJDO.getPollID());
 								objPollItemJDO.setPollOptionText(pollOptionText);
 								objPollItemJDO.setPollOptionImageURL(pollOptionImageURL);
-								objPollItemJDO.setOptionLikedList(optionLinkedList);
+								objPollItemJDO.setOptionLikedList(new ArrayList<String>());
 								
 								boolean blnIsSaved = PollItemDAO.savePollItemJDO(objPollItemJDO);
 								if(blnIsSaved){
@@ -139,5 +141,68 @@ public class PollingHelper {
 		return responseMap;
 	}
 	
-
+	
+	public static HashMap<String,Object> updatePollOptionHelper(String pollID, String pollOptionID, String contactID){
+		logger.info("IN updatePollOptionHelper()");
+		HashMap<String, Object> responseMap = new HashMap<String, Object>(); 
+		try{
+			
+			PollJDO objPollJDO = PollDAO.fetchPollsForThisPollID(pollID);
+			if(objPollJDO != null){
+				ArrayList<PollItemJDO> pollOptionsList = (ArrayList<PollItemJDO>) PollItemDAO.fetchPollOptionsForThisPollID(pollID);
+				if( pollOptionsList != null && pollOptionsList.size() > 0 ){
+					boolean isDisLikeOperation = false;
+					for(PollItemJDO singlePollItemJDO : pollOptionsList){
+						if( pollOptionID.equalsIgnoreCase(singlePollItemJDO.getPollOptionID()) ){
+							ArrayList<String> likedContactIDList = singlePollItemJDO.getOptionLikedList();
+							if( likedContactIDList != null && likedContactIDList.size() > 0 && likedContactIDList.contains(contactID)){
+								likedContactIDList.remove(contactID);
+								singlePollItemJDO.setOptionLikedList(likedContactIDList);
+								PollItemDAO.savePollItemJDO(singlePollItemJDO);
+								isDisLikeOperation = true;
+								break;
+							}
+						}
+					}
+					
+					if(!isDisLikeOperation){
+						for(PollItemJDO singlePollItemJDO : pollOptionsList){
+							if( pollOptionID.equalsIgnoreCase(singlePollItemJDO.getPollOptionID()) ){
+								ArrayList<String> likedContactIDList = singlePollItemJDO.getOptionLikedList();
+								likedContactIDList.add(contactID);
+								singlePollItemJDO.setOptionLikedList(likedContactIDList);
+								PollItemDAO.savePollItemJDO(singlePollItemJDO);
+							}else{
+								ArrayList<String> likedContactIDList = singlePollItemJDO.getOptionLikedList();
+								if( likedContactIDList != null && likedContactIDList.size() > 0 && likedContactIDList.contains(contactID)){
+									likedContactIDList.remove(contactID);
+									singlePollItemJDO.setOptionLikedList(likedContactIDList);
+									PollItemDAO.savePollItemJDO(singlePollItemJDO);
+								}
+							}
+						}
+					}
+					
+					responseMap.put("success", true);
+					responseMap.put("pollQuestionDetails", objPollJDO);
+					responseMap.put("pollOptionsList", pollOptionsList);
+					responseMap.put("message", "Poll options are updated!");
+					
+				}else{
+					responseMap.put("success", false);
+					responseMap.put("message", "Problem in updating the poll option!");
+				}
+			}else{
+				responseMap.put("success", false);
+				responseMap.put("message", "Problem in updating the poll option!");
+			}
+		}catch(Exception e){
+			logger.info(e.getMessage());
+			e.printStackTrace();
+			
+			responseMap.put("success", false);
+			responseMap.put("message", "Problem in updating the poll option!");
+		}
+		return responseMap;
+	}
 }

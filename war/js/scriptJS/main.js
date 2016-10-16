@@ -18,7 +18,7 @@ $(document).ready(function(){
 	    domElement += '         <input class="input_default input_small option-holder" type="text" placeholder="Enter option here...">';
 	    domElement += '	 		<span class="delete"></span>';
 	    domElement += '		</div>';
-	    domElement += '	  </div>';		
+	    domElement += '	  </div>';
 	    
 	    $('#poll-option-container').append(domElement);
 	});
@@ -244,7 +244,8 @@ var PollOperations = (function($,window,document,undefined){
 				if(response.success){
 					PollOperations.diplayPollsList(response.PollsDetailsList);
 				}
-			},error :function(errResp){
+			},
+			error :function(errResp){
 				console.error(errResp);
 			}
 		});
