@@ -37,7 +37,7 @@ public class PollDAO {
 			if( !CommonUtil.isEmptyString(streamID) ){
 				strQuery += " WHERE streamID == '" + streamID + "'";
 			}
-			strQuery += " ORDER BY createdTime ASC";
+			strQuery += " ORDER BY createdTime DESC";
 			
 			Query query = pm.newQuery(strQuery);
 			

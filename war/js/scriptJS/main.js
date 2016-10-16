@@ -3,6 +3,8 @@ var app = null;
 
 $(document).ready(function(){
 
+	$('#create-poll-container').hide();
+	$('#polls-list-container').hide();
 	
 	//adding extra option on creating the poll
 	$('#add-option').on('click',function(e){
@@ -133,6 +135,13 @@ function showImage(id, fileInput) {
 //    'id' : context-id // Context reference to show update indicator.
 //});
 
+var showLoader = function(){
+	$('#overlay, #loader').show();
+}
+
+var hideLoader = function(){
+	$('#overlay, #loader').hide();
+}
 
 var Poll = (function($,window,document,undefined){
 	
@@ -188,7 +197,7 @@ var PollOperations = (function($,window,document,undefined){
 			return;
 			
 		}
-		
+		showLoader();
 		var requestMap = {
 				'pollQuestionDetails' : {
 					//'streamID' : Poll.getContext().id,
@@ -216,12 +225,16 @@ var PollOperations = (function($,window,document,undefined){
 					var pollArray = [];
 					pollArray.push(response);
 					PollOperations.diplayPollsList(pollArray);
+					hideLoader();
 				}else{
 					console.log(response);
+					hideLoader();
 				}
 				
-			},failure : function(errResp){
+			},
+			error : function(errResp){
 				console.error(errResp);
+				hideLoader();
 			}
 		});
 		
@@ -229,11 +242,13 @@ var PollOperations = (function($,window,document,undefined){
 	
 	var fetchPollsForTheStream = function(streamID){
 		$('#create-poll-container').hide();
-		//show loader goes here
+		$('#polls-list').html("");
+		$('#polls-list-container').show();
 		if(streamID == ""){
 			console.error("streamID is empty so cant proceed further");
 			return;
 		}
+		showLoader();
 		var requestMap ={
 				'streamID' : streamID
 		}
@@ -247,20 +262,25 @@ var PollOperations = (function($,window,document,undefined){
 			success: function(response){
 				console.log(response);
 				if(response.success){
-					PollOperations.diplayPollsList(response.PollsDetailsList);
+					if( response.PollsDetailsList != 'undefined' && response.PollsDetailsList != null ){
+						PollOperations.diplayPollsList(response.PollsDetailsList);
+					}else{
+						$('#polls-list').html("<p>No Polls Yet!</p>");
+					}
 				}else{
 					$('#polls-list').html("<p>No Polls Yet!</p>");
 				}
+				hideLoader();
 			},
 			error :function(errResp){
 				console.error(errResp);
+				hideLoader();
 			}
 		});
 	};
 	
 	var diplayPollsList = function(pollsList){
 		//show the loader goes here
-		$('#polls-list').html("");
 		
 		for(var index in pollsList){
 			
@@ -291,7 +311,11 @@ var PollOperations = (function($,window,document,undefined){
 			pollDomItem += '		<h5 class="name" id="'+pollQuestionDetails.createdBy+'">' + pollQuestionDetails.createdUserName + '</h5>';
 			pollDomItem += '		<p>'+pollQuestionDetails.pollQuestion+'</p>';
 			pollDomItem += '		<div class="contract">';
-			pollDomItem += '			<cite>'+pollQuestionDetails.pollDescription+'</cite>';
+			if(pollQuestionDetails.pollDescription != null && pollQuestionDetails.pollDescription != ""){
+				pollDomItem += '			<cite>'+pollQuestionDetails.pollDescription+'</cite>';				
+			}else{
+				pollDomItem += '			<cite style="display:none;"></cite>';
+			}
 			pollDomItem += '			<div calss="option-container">';
 			pollDomItem += 					pollItemsList;		
 			pollDomItem += '			</div>';

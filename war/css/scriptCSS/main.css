@@ -36,16 +36,16 @@
 
 }
 .polling{
-width: 300px;
-margin: 0 auto;
-padding: 20px 20px 55px 20px;
-border:1px solid #d8dce1;
-border-radius: 3px;
-box-shadow: inset 0 1px 3px 0 rgba(0,0,0,0.5);
-box-sizing: border-box;
+    width: 300px;
+    margin: 0 auto;
+    padding: 20px 0 55px 0;
+    border: 1px solid #d8dce1;
+    border-radius: 3px;
+    box-shadow: inset 0 1px 3px 0 rgba(0,0,0,0.5);
+    box-sizing: border-box;
 }
 .polling button{
-    margin-top: 10px;
+    margin: 10px 20px 10px 0px;
 }
 .textarea_default {
 background-color: #fff;
@@ -62,7 +62,7 @@ font-weight: 300;
 .input_default {
     height: 30px;
     font-size: 14px;
-    font-weight: 300;
+    font-weight: 400;
     background-color: #fff;
     border: 1px solid #d8dce1;
     border-left: 0;
@@ -70,7 +70,12 @@ font-weight: 300;
     padding: 0 0 0 10px;
     outline: 0;
     border-radius: 3px;
-    width: 186px;
+    width: 211px;
+}
+
+.input_default.selected {
+	background-color: rgba(94,242,200,.10);
+	border: 1px solid #4DAAD0;
 }
 
 .polling-station .input_default {
@@ -124,8 +129,9 @@ background-color: #83C447;
     margin: 20px 0px;
 }
 .polling h3{
-    color:#2B333D;
+	color: #2B333D;
     font-size: 16px;
+    margin: 0 20px;
 }
 .add{
     color:#21ABF0;
@@ -156,6 +162,7 @@ button{
     box-shadow: inset 0 1px 3px 0 rgba(0,0,0,.05);
     width: 256px;
     border-radius: 4px;
+    position : relative;
 }
 
 .poll-option:hover  span.delete{
@@ -163,10 +170,12 @@ button{
 }
 
 .poll-option span.delete{
-	background: url(/images/close.png) no-repeat center top 10px;
-    width: 20px;
-    height: 20px;
-    float: right;
+	background: url(/images/close.png) no-repeat;
+    width: 10px;
+    height: 10px;
+    position : absolute;
+    bottom : 10px;
+  	right : 10px;
     display:none;
     cursor: pointer;
 }
@@ -215,6 +224,7 @@ button{
     color: #7F8796;
     float: right;
     margin-top: 5px;
+    opacity: 0.5;
 }
 .question .name{
     font-size: 14px;
@@ -246,19 +256,20 @@ button{
 ul{
     max-height: 324px;
     height: 100%;
-    overflow: scroll;
+    overflow: auto;
 }
 .container{
     max-height: 294px;
     height: 100%;
-    overflow: scroll;
+    overflow: auto;
+    padding: 0 20px;
 }
 li.question{
-    list-style: none;
+   	list-style: none;
     border-bottom: 1px solid #E4E6EA;
-    padding: 5px 20px 15px 20px;
-    margin: 0px -20px 0px -20px;
+    padding: 5px 20px 15px;
     cursor: pointer;
+    margin: 0;
 }
 
 .overlay{
@@ -276,13 +287,17 @@ li.question{
 .loader{
 	display: none;
     position: absolute;
-    top: 40%;
+    top: 30%;
     left: 49%;
     z-index: 1001;
 }
 
 .wrapper {
 	position: relative;
+}
+
+.contract {
+	margin: 0 !important;
 }
 
 */
