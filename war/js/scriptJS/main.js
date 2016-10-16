@@ -3,7 +3,6 @@ var app = null;
 
 $(document).ready(function(){
 
-	
 	//adding extra option on creating the poll
 	$('#add-option').on('click',function(e){
 		var optionsCount = $('#poll-option-container').find('label').length;
@@ -23,7 +22,8 @@ $(document).ready(function(){
 	    $('#poll-option-container').append(domElement);
 	});
 	
-	
+		
+	//creating a new poll
 	$('#create-poll').on('click',function(e){
 		var pollQuestion = $('#poll-question').find('textarea').val();
 		var pollDescription = $('#poll-description').find('textarea').val();
@@ -58,8 +58,8 @@ $(document).ready(function(){
 			
 	});
 		
-	  //PollOperations.fetchPollsForTheStream(Poll.getContext().id);	
-	  PollOperations.fetchPollsForTheStream('3aab167e-fcb5-4b6a-a962-17c48551c204');	
+	  PollOperations.fetchPollsForTheStream(Poll.getContext().id);	
+//	  PollOperations.fetchPollsForTheStream('3aab167e-fcb5-4b6a-a962-17c48551c204');	
 
 });
 
@@ -93,9 +93,7 @@ $(document.body).on('click','#polls-list-container input.option-holder',function
 	
 	var pollOptionID = $(this).parents('div.poll-opt-div').attr('id').split('_')[0];
 	var pollID = $(this).parents('li').attr('id').split('_')[0];
-//	var contactID = Poll.getAppUser().id;
-	//var contactID = '103701';
-	var contactID = '103650';
+	var contactID = Poll.getAppUser().id;
 	
 	PollOperations.updatePoll(pollID,pollOptionID,contactID);
 });
@@ -150,7 +148,7 @@ var Poll = (function($,window,document,undefined){
 		app = AAFClient.init();
 		app.on('registered', function(data) {
 			   console.error("On app.registered event.",data);
-			   _appUser = data.user;
+			   _appuser = data.user;
 			 });
 		
 		app.on('activated',function(data){
@@ -198,10 +196,12 @@ var PollOperations = (function($,window,document,undefined){
 		
 		var requestMap = {
 				'pollQuestionDetails' : {
-					//'streamID' : Poll.getContext().id,
-					'streamID' 		  :'3aab167e-fcb5-4b6a-a962-17c48551c204',
-					'createdBy' 	  : '5f3e80ff-e730-470f-a708-bb4639a55a6c',
-					'createdUserName' : 'anusha',
+					'streamID' : Poll.getContext().id,
+//					'streamID' 		  :'3aab167e-fcb5-4b6a-a962-17c48551c204',
+					'createdBy' 	  : Poll.getAppUser().id,
+//					'createdBy' 	  : '5f3e80ff-e730-470f-a708-bb4639a55a6c',
+					'createdUserName' 	  : Poll.getAppUser().firstName,
+//					'createdUserName' : 'anusha',
 					'createdUserImg'  : 'http://lh3.googleusercontent.com/gklzH6FsFJ0t8pyBDoiwUKMW34SDixebyqfdVt7BVvetxL-jksSsgQN69R0bf5gS0YCu038ziYCK28rt2vxDBQ-s8JbBfuOPl8D67YQ',
  					'pollQuestion' 	  : pollQuestion,
 					'pollDescription' : pollDescription
@@ -295,7 +295,7 @@ var PollOperations = (function($,window,document,undefined){
 				var count = 0;
 				var likedList = pollOptionsList[ind].optionLikedList;
 				if(likedList.length != 0 ){
-					if(likedList.indexOf('103650') > -1 ){
+					if(likedList.indexOf(Poll.getAppUser().id) > -1 ){
 						if(likedList.length == 1){
 							count = likedList.length+ " vote - You voted";
 						}else{
@@ -316,7 +316,7 @@ var PollOperations = (function($,window,document,undefined){
 				
 				var optionLikedList = pollOptionsList[ind].optionLikedList;
 				for( var polloptId in optionLikedList){
-					if(optionLikedList[polloptId].indexOf(/*Poll.getAppUser().id*/ "103650") > -1){
+					if(optionLikedList[polloptId].indexOf(Poll.getAppUser().id) > -1){
 						showNotification = true;
 						break;
 					}
@@ -381,7 +381,7 @@ var PollOperations = (function($,window,document,undefined){
 						
 						var count = 0;
 						if(likedList.length != 0 ){
-							if(likedList.indexOf('103650') > -1 ){
+							if(likedList.indexOf(Poll.getAppUser().id) > -1 ){
 								if(likedList.length == 1){
 									count = likedList.length+ " vote - You voted";
 								}else{
