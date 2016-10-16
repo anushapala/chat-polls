@@ -36,33 +36,33 @@
 
 }
 .polling{
-width: 300px;
-margin: 0 auto;
-padding: 20px 20px 55px 20px;
-border:1px solid #d8dce1;
-border-radius: 3px;
-box-shadow: inset 0 1px 3px 0 rgba(0,0,0,0.5);
-box-sizing: border-box;
+    width: 300px;
+    margin: 0 auto;
+    padding: 20px 0 55px 0;
+    border: 1px solid #d8dce1;
+    border-radius: 3px;
+    box-shadow: inset 0 1px 3px 0 rgba(0,0,0,0.5);
+    box-sizing: border-box;
 }
 .polling button{
-    margin-top: 10px;
+    margin: 10px 20px 10px 0px;
 }
 .textarea_default {
-	background-color: #fff;
-	border: 1px solid #d8dce1;
-	box-shadow: inset 0 1px 3px 0 rgba(0,0,0,.05);
-	padding: 10px;
-	outline: 0;
-	border-radius: 3px;
-	width: 258px;
-	resize: none;
-	font-size: 14px;
-	font-weight: 300;
+background-color: #fff;
+border: 1px solid #d8dce1;
+box-shadow: inset 0 1px 3px 0 rgba(0,0,0,.05);
+padding: 10px;
+outline: 0;
+border-radius: 3px;
+width: 258px;
+resize: none;
+font-size: 14px;
+font-weight: 300;
 }
 .input_default {
     height: 30px;
     font-size: 14px;
-    font-weight: 300;
+    font-weight: 400;
     background-color: #fff;
     border: 1px solid #d8dce1;
     border-left: 0;
@@ -124,8 +124,9 @@ background-color: #83C447;
     margin: 20px 0px;
 }
 .polling h3{
-    color:#2B333D;
+	color: #2B333D;
     font-size: 16px;
+    margin: 0 20px;
 }
 .add{
     color:#21ABF0;
@@ -156,7 +157,7 @@ button{
     box-shadow: inset 0 1px 3px 0 rgba(0,0,0,.05);
     width: 256px;
     border-radius: 4px;
-    position:relative;
+    position : relative;
 }
 
 .poll-option:hover  span.delete{
@@ -168,8 +169,8 @@ button{
     width: 10px;
     height: 10px;
     position : absolute;
-    bottom :10px;
-    right:	10px;
+    bottom : 10px;
+  	right : 10px;
     display:none;
     cursor: pointer;
 }
@@ -218,6 +219,7 @@ button{
     color: #7F8796;
     float: right;
     margin-top: 5px;
+    opacity: 0.5;
 }
 .question .name{
     font-size: 14px;
@@ -249,26 +251,49 @@ button{
 ul{
     max-height: 324px;
     height: 100%;
-    overflow: scroll;
+    overflow: auto;
 }
 .container{
     max-height: 294px;
     height: 100%;
-    overflow: scroll;
+    overflow: auto;
+    padding: 0 20px;
 }
-li{
-    list-style: none;
+li.question{
+   	list-style: none;
     border-bottom: 1px solid #E4E6EA;
-    padding: 5px 20px 15px 20px;
-    margin: 0px -20px 0px -20px;
-    cursor :pointer;
+    padding: 5px 20px 15px;
+    cursor: pointer;
+    margin: 0;
 }
 
-.selected{
-	background-color: rgba(94,242,200,.10);
-	border-color: #4DAAD0;	
+.overlay{
+	display : none;
+	position : absolute;
+	top : 0;
+	left : 490px;
+	width : 300px;
+	height : 430px;
+	background-color : #fff;
+	opacity : 0.5;
+	z-index : 999;
+	margin : 0 !important;
+}
+.loader{
+	display: none;
+    position: absolute;
+    top: 30%;
+    left: 49%;
+    z-index: 1001;
 }
 
+.wrapper {
+	position: relative;
+}
+
+.contract {
+	margin: 0 !important;
+}
 
 */
 @media (-webkit-min-device-pixel-ratio: 2), (min-resolution: 192dpi) {

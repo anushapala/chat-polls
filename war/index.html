@@ -16,7 +16,7 @@
 
   <body>
   <div class="wrapper">
-  	<section class="Polling" id="create-poll-container" style="display: block";>
+  	<section class="Polling" id="create-poll-container" style="display:none;">
         <h3>Create a Poll</h3>
         <div class="container">
         <div class="question" id="poll-question">
@@ -54,7 +54,7 @@
     </section>
     
     <!---polling station-->
-      <section class="Polling polling-station"  id="polls-list-container"style="display: none";>
+      <section class="Polling polling-station"  id="polls-list-container" style="display:none;">
         <h3>Polls</h3>
 	    <ul id="polls-list">
 	        <li class="question">
@@ -68,7 +68,7 @@
 	                    <label class="input_label">option 1:</label>
 	                    <div class="poll-option">
 	                        <i class="icon picture-upload"></i>
-	                        <input class="input_default  option-holder" type="text" placeholder="Enter option here...">
+	                        <input class="input_default option-holder" type="text" placeholder="Enter option here...">
 	                    </div>
 	                    <code>22 votes</code>
 	                     </div>
@@ -76,7 +76,7 @@
 	                        <label class="input_label">option 2:</label>
 	                        <div class="poll-option">
 	                            <i class="icon picture-upload"></i>
-	                            <input class="input_default  option-holder" type="text" placeholder="Enter option here...">
+	                            <input class="input_default option-holder" type="text" placeholder="Enter option here...">
 	                        </div>
 	                        <code>5 votes</code>
 	                    </div>
@@ -84,10 +84,14 @@
             	</div>
 	        </li>
 	    </ul>
-        <button class="btn btn_primary" id="create-new-poll">Create new poll</button>
+        <button class="btn btn_primary" id="create-new-poll">Create New Poll</button>
     </section>
 
    </div>
+   
+   <div id="overlay" class="overlay"></div>
+   <div id="loader" class="loader"><img src="/images/loader_small.gif"/></div>
+   
  	<script type="text/javascript" src="/js/libJS/jquery-2.2.0.min.js"></script>
  	<script type="text/javascript" src="/js/libJS/aaf_sdk_min.js"></script>
   	<script type="text/javascript" src="/js/scriptJS/main.js"></script>
