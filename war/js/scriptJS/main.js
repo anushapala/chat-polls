@@ -57,7 +57,10 @@ $(document).ready(function(){
 		}
 			
 	});
-	
+		
+	  //PollOperations.fetchPollsForTheStream(Poll.getContext().id);	
+	  PollOperations.fetchPollsForTheStream('3aab167e-fcb5-4b6a-a962-17c48551c204');	
+
 });
 
 
@@ -75,6 +78,14 @@ $(document.body).on('change','input:file', function () {
 
 $(document.body).on('click','.delete',function(){
 	$(this).parent('div.poll-option').parent('div').remove();
+});
+
+$(document.body).on('click','#create-new-poll',function(){
+	PollOperations.showCreateNewPollView();
+});
+
+$(document.body).on('click','#polls-list li',function(){
+	$(this).find('div.contract').slideToggle('3000')
 });
 
 function showImage(id, fileInput) {
@@ -123,12 +134,6 @@ var Poll = (function($,window,document,undefined){
 	
 	var _appuser, _context = {};
 	
-	var getAppUser = function(){
-		return _appuser;
-	};
-	var getContext = function(){
-		return _context;
-	};
 	var _init = function(){
 		app = AAFClient.init();
 		app.on('registered', function(data) {
@@ -151,6 +156,14 @@ var Poll = (function($,window,document,undefined){
 			});
 			
 	};
+	
+	var getAppUser = function(){
+		return _appuser;
+	};
+	var getContext = function(){
+		return _context;
+	};
+	
 	_init();
 	
 	return{ 
@@ -177,7 +190,7 @@ var PollOperations = (function($,window,document,undefined){
 					'streamID' 		  :'3aab167e-fcb5-4b6a-a962-17c48551c204',
 					'createdBy' 	  : '5f3e80ff-e730-470f-a708-bb4639a55a6c',
 					'createdUserName' : 'anusha',
-					'createdUserImg'  : "http://lh3.googleusercontent.com/gklzH6FsFJ0t8pyBDoiwUKMW34SDixebyqfdVt7BVvetxL-jksSsgQN69R0bf5gS0YCu038ziYCK28rt2vxDBQ-s8JbBfuOPl8D67YQ"
+					'createdUserImg'  : 'http://lh3.googleusercontent.com/gklzH6FsFJ0t8pyBDoiwUKMW34SDixebyqfdVt7BVvetxL-jksSsgQN69R0bf5gS0YCu038ziYCK28rt2vxDBQ-s8JbBfuOPl8D67YQ',
  					'pollQuestion' 	  : pollQuestion,
 					'pollDescription' : pollDescription
 				},
@@ -210,6 +223,8 @@ var PollOperations = (function($,window,document,undefined){
 	};
 	
 	var fetchPollsForTheStream = function(streamID){
+		$('#create-poll-container').hide();
+		//show loader goes here
 		if(streamID == ""){
 			console.error("streamID is empty so cant proceed further");
 			return;
@@ -229,14 +244,14 @@ var PollOperations = (function($,window,document,undefined){
 				if(response.success){
 					PollOperations.diplayPollsList(response.PollsDetailsList);
 				}
-			},failure :function(errResp){
+			},error :function(errResp){
 				console.error(errResp);
 			}
 		});
 	};
 	
 	var diplayPollsList = function(pollsList){
-		
+		//show the loader goes here
 		$('#polls-list').html("");
 		
 		for(var index in pollsList){
@@ -278,22 +293,65 @@ var PollOperations = (function($,window,document,undefined){
 			$('#polls-list').append(pollDomItem);
 		}
 		
-		$('#create-poll-container').hide();
-		$('#polls-list-container').show();
+		PollOperations.showPollsListView();
+	};	
+	
+	var updatePoll = function(pollID,pollOptionID,contactID){
 		
+		if(pollID == "" ||pollOptionID == "" || contactID == "" ){
+			console.error('no required parameters');
+			return;
+		}
+		
+		var requestMap = {
+				'pollID' : pollID,
+				'pollOptionID' : pollOptionID,
+				'contactID' : contactID
+		}
+		
+		var responseJSON = JSON.strinfigy(requestMap);
+		
+		
+		$.ajax({
+			type : 'POST',
+			url : '/poll/updatePollOption',
+			data : responseJSON,
+			dataType : 'json',
+			contentType:'application/json',
+			success : function(response){
+				if(resposne.success){
+					
+					//do the update front end action. 
+					
+				}
+				
+			},error : function(errResp){
+				console.error(errResp);
+			}
+		});
+	
 	};
 	
-	var updatePoll = function(){
-		
-		
-		
-		
+	var showCreateNewPollView = function(){
+		$('#polls-list-container').hide();
+		$('#create-poll-container').find('textarea').val("");
+		$('#create-poll-container').find('input').val("");
+		$('#create-poll-container').find('img').attr('src','')
+		$('#create-poll-container').show();
 	};
+	
+	var showPollsListView = function(){
+		$('#create-poll-container').hide();
+		$('#polls-list-container').show();
+	}
 	
 	return{
 		createPoll : createPoll,
 		fetchPollsForTheStream : fetchPollsForTheStream,
 		diplayPollsList : diplayPollsList,
+		showCreateNewPollView : showCreateNewPollView,
+		showPollsListView : showPollsListView,
+		updatePoll : updatePoll,
 	}
 	
 })(jQuery,window,document);
