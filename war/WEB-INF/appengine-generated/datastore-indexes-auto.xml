@@ -1,8 +1,8 @@
-<!-- Indices written at Sun, 16 Oct 2016 18:11:13 IST -->
+<!-- Indices written at Sun, 16 Oct 2016 18:33:33 IST -->
 
 <datastore-indexes>
 
-    <!-- Used 34 times in query history -->
+    <!-- Used 53 times in query history -->
     <datastore-index kind="PollJDO" ancestor="false" source="auto">
         <property name="streamID" direction="asc"/>
         <property name="createdTime" direction="desc"/>

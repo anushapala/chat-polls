@@ -212,12 +212,9 @@ var PollOperations = (function($,window,document,undefined){
 		showLoader();
 		var requestMap = {
 				'pollQuestionDetails' : {
-					'streamID' : Poll.getContext().id,
-//					'streamID' 		  :'3aab167e-fcb5-4b6a-a962-17c48551c204',
+					'streamID' 		  : Poll.getContext().id,
 					'createdBy' 	  : Poll.getAppUser().id,
-//					'createdBy' 	  : '5f3e80ff-e730-470f-a708-bb4639a55a6c',
 					'createdUserName' 	  : Poll.getAppUser().firstName,
-//					'createdUserName' : 'anusha',
 					'createdUserImg'  : 'http://lh3.googleusercontent.com/gklzH6FsFJ0t8pyBDoiwUKMW34SDixebyqfdVt7BVvetxL-jksSsgQN69R0bf5gS0YCu038ziYCK28rt2vxDBQ-s8JbBfuOPl8D67YQ',
  					'pollQuestion' 	  : pollQuestion,
 					'pollDescription' : pollDescription
@@ -354,7 +351,7 @@ var PollOperations = (function($,window,document,undefined){
 			
 			var pollDomItem = '<li class="question" id="'+pollQuestionDetails.pollID+'_pollID">';
 //			pollDomItem += '		<span class="notification"></span>';
-			pollDomItem += '		<h5 class="name" id="'+pollQuestionDetails.createdBy+'_pollOnwer">anusha</h5>';
+			pollDomItem += '		<h5 class="name" id="'+pollQuestionDetails.createdBy+'_pollOnwer">'+pollQuestionDetails.createdUserName+'</h5>';
 			pollDomItem += '		<p>'+pollQuestionDetails.pollQuestion+'</p>';
 			pollDomItem += '		<div class="contract">';
 			if(pollQuestionDetails.pollDescription != null && pollQuestionDetails.pollDescription != ""){
