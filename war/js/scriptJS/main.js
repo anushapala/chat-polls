@@ -85,15 +85,27 @@ $(document.body).on('click','#create-new-poll, #create_a_poll',function(){
 	PollOperations.showCreateNewPollView();
 });
 
-$(document.body).on('click','#polls-list li',function(){
-	$(this).find('div.contract').slideToggle('3000')
-});
-
-$(document.body).on('click','#polls-list-container input.option-holder',function(e){
+$(document.body).on('click','#polls-list li>h5, #polls-list li>p',function(e){
 	e.stopImmediatePropagation();
 	
-	var pollOptionID = $(this).parents('div.poll-opt-div').attr('id').split('_')[0];
-	var pollID = $(this).parents('li').attr('id').split('_')[0];
+	if( $(this).parent('li').hasClass('open') ){//manual slide up
+		$(this).parent('li').removeClass('open').find('div.contract').slideUp('3000');
+	}else{
+		$('#polls-list li.open').removeClass('open').find('div.contract').slideUp('3000');//auto slide up
+		$(this).parent('li').addClass('open').find('div.contract').slideDown('3000');
+	}
+//	if( $(this).find('div.contract').css('display') == 'block' ){
+//		$(this).css('opacity', '1');
+//	}else{
+//		$(this).css('opacity', '0.5');
+//	}
+});
+
+$(document.body).on('click','#polls-list-container div.poll-option',function(e){
+	e.stopImmediatePropagation();
+	
+	var pollOptionID = $(this).parent('div.poll-opt-div').attr('id').split('_')[0];
+	var pollID = $(this).parents('li.question').attr('id').split('_')[0];
 	var contactID = Poll.getAppUser().id;
 	
 	PollOperations.updatePoll(pollID,pollOptionID,contactID);
@@ -147,7 +159,7 @@ var hideLoader = function(){
 	$('#overlay, #loader').hide();
 }
 
-var showPollEmptyState(){
+var showPollEmptyState = function(){
 	$('#create-poll-container').hide();
 	$('#polls-list-container').hide();
 	$('#empty_poll_container').show();
@@ -358,7 +370,7 @@ var PollOperations = (function($,window,document,undefined){
 			
 			var pollDomItem = '<li class="question" id="'+pollQuestionDetails.pollID+'_pollID">';
 //			pollDomItem += '		<span class="notification"></span>';
-			pollDomItem += '		<h5 class="name" id="'+pollQuestionDetails.createdBy+'_pollOnwer">anusha</h5>';
+			pollDomItem += '		<h5 class="name" id="'+pollQuestionDetails.createdBy+'_pollOnwer">'+pollQuestionDetails.createdUserName+'</h5>';
 			pollDomItem += '		<p>'+pollQuestionDetails.pollQuestion+'</p>';
 			pollDomItem += '		<div class="contract">';
 			if(pollQuestionDetails.pollDescription != null && pollQuestionDetails.pollDescription != ""){
@@ -374,7 +386,7 @@ var PollOperations = (function($,window,document,undefined){
 			
 			if('prependNewPoll' == requestionFrom){
 				$('#polls-list').prepend(pollDomItem);
-				$(this).find('div.contract').slideUp('3000')
+				$('#polls-list').find('div.contract').slideUp('3000');
 
 			}else{
 				$('#polls-list').append(pollDomItem);
@@ -391,7 +403,7 @@ var PollOperations = (function($,window,document,undefined){
 			console.error('no required parameters');
 			return;
 		}
-		
+		showLoader();
 		var requestMap = {
 				'pollID' : pollID,
 				'pollOptionID' : pollOptionID,
@@ -408,6 +420,8 @@ var PollOperations = (function($,window,document,undefined){
 			contentType:'application/json',
 			success : function(response){
 				if(response.success){
+					hideLoader();
+					
 					var pollOptionsList = response.pollOptionsList;
 					
 					$('#'+pollID+'_pollID').find('input.option-holder').removeClass('selected');
@@ -439,7 +453,8 @@ var PollOperations = (function($,window,document,undefined){
 					}	
 				}
 				
-			},error : function(errResp){
+			},
+			error : function(errResp){
 				console.error(errResp);
 			}
 		});
