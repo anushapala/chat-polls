@@ -38,7 +38,7 @@
 .polling{
     width: 300px;
     margin: 0 auto;
-    padding: 20px 0 55px 0;
+    padding: 20px 0 56px 0;
     border: 1px solid #d8dce1;
     border-radius: 3px;
     box-shadow: inset 0 1px 3px 0 rgba(0,0,0,0.5);
@@ -79,6 +79,7 @@ font-weight: 300;
 
 .input_label {
 font-size: 12px;
+font-weight: 500;
 color: #7f8796;
 text-transform: uppercase;
 display: block;
@@ -178,8 +179,6 @@ button{
 .selected{
 	background: url(/images/tick.png) no-repeat bottom 5px right 10px;
 }
-	
-
 
 .icon{
     width: 40px;
@@ -270,13 +269,14 @@ li.question{
     padding: 5px 20px 15px;
     cursor: pointer;
     margin: 0;
+    /* opacity: 0.5; */
 }
 
 .overlay{
 	display : none;
 	position : absolute;
 	top : 0;
-	left : 490px;
+	left : 0;
 	width : 300px;
 	height : 430px;
 	background-color : #fff;
@@ -287,8 +287,8 @@ li.question{
 .loader{
 	display: none;
     position: absolute;
-    top: 30%;
-    left: 49%;
+    top: 48%;
+    left: 45%;
     z-index: 1001;
 }
 
@@ -298,6 +298,20 @@ li.question{
 
 .contract {
 	margin: 0 !important;
+}
+
+.empty-state img{
+    margin: 120px 80px 10px 102px;
+}
+.empty-state h2{
+    text-align: center;
+    font-size: 16px;
+    font-weight: 400;
+    color: #7F8796;
+}
+.empty-state button{
+    float: none;
+    margin: 15px auto 86px auto;
 }
 
 */
