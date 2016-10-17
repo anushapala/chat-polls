@@ -57,6 +57,9 @@ $(document).ready(function(){
 		}
 			
 	});		
+	
+	PollOperations.fetchPollsForTheStream();
+
 });
 
 
@@ -82,8 +85,25 @@ $(document.body).on('click','.delete',function(){
 });
 
 $(document.body).on('click','#create-new-poll, #create_a_poll',function(){
-	PollOperations.showCreateNewPollView();
+	
+	var source = "";
+	if($(this).attr('id') == 'create_a_poll'){
+		source = "showEmptyState";
+	}else{
+		source = "showPollsList";
+	}
+	PollOperations.showCreateNewPollView(source);
 });
+
+$(document.body).on('click','#back-button',function(){
+	var moveTo = $(this).attr('data-moveTo');
+	if('showEmptyState' == moveTo){
+		showPollEmptyState();
+	}else if('showPollsList' == moveTo){
+		PollOperations.showPollsListView();
+	}
+});
+
 
 $(document.body).on('click','#polls-list li>h5, #polls-list li>p',function(e){
 	e.stopImmediatePropagation();
@@ -129,27 +149,6 @@ function showImage(id, fileInput) {
         console.log('File not supported' + imageType);
     }
 }
-
-////default events
-//
-////To show the count on app icon at chat header.
-//app.postMessage('showCount',{  
-//'count': 10,
-//'id'   : context-id // userId / streamId
-//}); 
-//
-//// To trigger desktop notification w.r.t user/stream
-//app.postMessage('showNotification',{  
-//    'id'     : context-id
-//    'icon'   : null,          // App icon url to be shown in desktop notification.
-//    'title'  : title          // Title for the desktop notification. Ex :"Todo app remainder",
-//    'message': message        // body content for desktop notification. Ex : "Enabled desktop notification for todo app."
-//  });
-//
-//// To show the app update indicator on recent contact/stream view context.
-//app.postMessage('showIndicator',{
-//    'id' : context-id // Context reference to show update indicator.
-//});
 
 var showLoader = function(){
 	$('#overlay, #loader').show();
@@ -461,7 +460,8 @@ var PollOperations = (function($,window,document,undefined){
 	
 	};
 	
-	var showCreateNewPollView = function(){
+	var showCreateNewPollView = function(source){
+		$('#back-button').attr('data-moveTo',source);
 		$('#empty_poll_container').hide();
 		$('#polls-list-container').hide();
 		$('#create-poll-container').find('textarea').val("");
