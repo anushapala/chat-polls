@@ -58,8 +58,6 @@ $(document).ready(function(){
 			
 	});		
 	
-	PollOperations.fetchPollsForTheStream();
-
 });
 
 
@@ -183,7 +181,17 @@ var Poll = (function($,window,document,undefined){
 			  $('#create-poll-container').hide();
 			  $('#polls-list-container').hide();
 			  $('#empty_poll_container').hide();
-			  PollOperations.fetchPollsForTheStream(_context.id);	
+			  
+			  var streamID = "";
+				if(Poll.getContext().public != undefined && Poll.getContext().public ){
+					streamID = Poll.getContext().id;
+				}else{
+					//poll for individual chat
+					var idList = [Poll.getContext().id,Poll.getAppUser().id].sort();
+					streamID = idList+"";
+				}
+				
+			  PollOperations.fetchPollsForTheStream(streamID);	
 			});
 
 		app.on('context-change',function(data){
@@ -193,7 +201,17 @@ var Poll = (function($,window,document,undefined){
 				$('#create-poll-container').hide();
 				$('#polls-list-container').hide();
 				$('#empty_poll_container').hide();
-				PollOperations.fetchPollsForTheStream(_context.id);
+				
+				var streamID = "";
+				if(Poll.getContext().public != undefined && Poll.getContext().public ){
+					streamID = Poll.getContext().id;
+				}else{
+					//poll for individual chat
+					var idList = [Poll.getContext().id,Poll.getAppUser().id].sort();
+					streamID = idList+"";
+				}
+				
+				PollOperations.fetchPollsForTheStream(streamID);
 			});
 
 		app.on('deactivated',function(data){
@@ -225,13 +243,22 @@ var PollOperations = (function($,window,document,undefined){
 		
 		if(pollQuestion == "" || pollOptionsList.length == 0 ){
 			console.error('no proper parameters to create the poll');
-			return;
-			
+			return;	
 		}
 		showLoader();
+		
+		var streamID = "";
+		if(Poll.getContext().public != undefined && Poll.getContext().public ){
+			streamID = Poll.getContext().id;
+		}else{
+			//poll for individual chat
+			var idList = [Poll.getContext().id,Poll.getAppUser().id].sort();
+			streamID = idList+"";
+		}
+		
 		var requestMap = {
 				'pollQuestionDetails' : {
-					'streamID' : Poll.getContext().id,
+					'streamID' 		  : streamID,
 //					'streamID' 		  :'3aab167e-fcb5-4b6a-a962-17c48551c204',
 					'createdBy' 	  : Poll.getAppUser().id,
 //					'createdBy' 	  : '5f3e80ff-e730-470f-a708-bb4639a55a6c',
