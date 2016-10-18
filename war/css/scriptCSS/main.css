@@ -35,6 +35,7 @@
     font-style: normal;
 
 }
+
 .polling{
     width: 300px;
     margin: 0 auto;
@@ -44,6 +45,17 @@
     box-shadow: inset 0 1px 3px 0 rgba(0,0,0,0.5);
     box-sizing: border-box;
 }
+
+#create-poll-container.polling{
+    width: 300px;
+    margin: 0 auto;
+    padding: 20px 0 74px 0;
+    border: 1px solid #d8dce1;
+    border-radius: 3px;
+    box-shadow: inset 0 1px 3px 0 rgba(0,0,0,0.5);
+    box-sizing: border-box;
+}
+
 .polling button{
     margin: 10px 20px 10px 0px;
 }
