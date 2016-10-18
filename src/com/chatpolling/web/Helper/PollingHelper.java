@@ -56,7 +56,7 @@ public class PollingHelper {
 						for(HashMap<String, Object> singleOptionDetails : pollOptionsDetails){
 							String pollOptionText = (String) singleOptionDetails.get("pollOptionContent");
 							String pollOptionImageURL = (String) singleOptionDetails.get("pollOptionImageURL");
-							pollOptionImageURL = "https://storage.googleapis.com/pollapplication-146416.appspot.com/poll_logo.png";
+							pollOptionImageURL = "https://storage.googleapis.com/pollapplication-146416.appspot.com/Poll_logo.png";
 							
 							if(!CommonUtil.isEmptyString(pollOptionText)){
 								PollItemJDO objPollItemJDO = new PollItemJDO();
