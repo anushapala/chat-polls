@@ -183,7 +183,7 @@ var Poll = (function($,window,document,undefined){
 			  $('#empty_poll_container').hide();
 			  
 			  var streamID = "";
-				if(Poll.getContext().public != undefined && Poll.getContext().public ){
+				if(Poll.getContext().public != undefined){
 					streamID = Poll.getContext().id;
 				}else{
 					//poll for individual chat
@@ -203,7 +203,7 @@ var Poll = (function($,window,document,undefined){
 				$('#empty_poll_container').hide();
 				
 				var streamID = "";
-				if(Poll.getContext().public != undefined && Poll.getContext().public ){
+				if(Poll.getContext().public != undefined){
 					streamID = Poll.getContext().id;
 				}else{
 					//poll for individual chat
@@ -248,7 +248,7 @@ var PollOperations = (function($,window,document,undefined){
 		showLoader();
 		
 		var streamID = "";
-		if(Poll.getContext().public != undefined && Poll.getContext().public ){
+		if(Poll.getContext().public != undefined){
 			streamID = Poll.getContext().id;
 		}else{
 			//poll for individual chat
